@@ -38,7 +38,6 @@ Page({
     });
   },
   changeTheme() {
-    console.log(this.data);
     getApp().themeChanged(this.data.theme === 'light' ? 'dark' : 'light');
   },
 
