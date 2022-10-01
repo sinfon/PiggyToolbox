@@ -5,34 +5,22 @@ Page({
     inputVal: '',
     list: [
       {
-        id: 'form',
-        name: '表单',
+        id: 'timer',
+        name: '计时器',
         open: false,
-        pages: ['button', 'input', 'form', 'list', 'slideview', 'slider', 'uploader'],
+        pages: [{
+          name: '宝宝计时器',
+          path: '/pages/timer/baby-timer/baby-timer',
+        }],
       },
       {
-        id: 'layout',
-        name: '基础组件',
+        id: 'counter',
+        name: '计数器',
         open: false,
-        pages: ['article', 'badge', 'flex', 'footer', 'gallery', 'grid', 'icons', 'loading', 'loadmore', 'panel', 'preview', 'progress', 'steps'],
-      },
-      {
-        id: 'feedback',
-        name: '操作反馈',
-        open: false,
-        pages: ['actionsheet', 'dialog', 'half-screen-dialog', 'msg', 'picker', 'toast', 'top-tips'],
-      },
-      {
-        id: 'nav',
-        name: '导航相关',
-        open: false,
-        pages: ['navigation-bar', 'tabbar'],
-      },
-      {
-        id: 'search',
-        name: '搜索相关',
-        open: false,
-        pages: ['searchbar'],
+        pages: [{
+          name: '宝宝计数器',
+          path: '/pages/counter/baby-counter/baby-counter',
+        }],
       },
     ],
   },

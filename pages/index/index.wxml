@@ -53,8 +53,8 @@
           <view aria-hidden="{{item.open ? 'false' : 'true'}}" class="kind-list__item-bd {{item.open ? 'kind-list__item-bd_show' : ''}}">
             <view class="weui-cells {{item.open ? 'weui-cells_show' : ''}}">
               <block wx:for="{{item.pages}}" wx:for-item="page" wx:key="*this">
-                <navigator aria-role="menuitem" url="{{page}}/{{page}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                  <view class="weui-cell__bd">{{page}}</view>
+                <navigator aria-role="menuitem" url="{{page.path}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                  <view class="weui-cell__bd">{{page.name}}</view>
                   <view class="weui-cell__ft weui-cell__ft_in-access"></view>
                 </navigator>
               </block>
