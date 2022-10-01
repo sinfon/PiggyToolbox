@@ -65,6 +65,7 @@
     </view>
   </view>
   <view class="page__ft" bindtap="changeTheme">
-    <image aria-label="weui logo" src="/images/icon_footer.png" style="width: 84px; height: 19px;"></image>
+    <image wx:if="{{theme == 'dark'}}" aria-label="weui logo" src="/images/icon_theme_dark.png" style="width: 26px; height: 26px;"></image>
+    <image wx:else aria-label="weui logo" src="/images/icon_theme_light.png" style="width: 26px; height: 26px;"></image>
   </view>
 </view>
