@@ -1,2 +1,2 @@
-<!--pages/timer/baby-timer/baby-timer.wxml-->
-<text>pages/timer/baby-timer/baby-timer.wxml</text>
+<page-meta root-font-size="system"></page-meta>
+<view class="page" data-weui-theme="{{theme}}" data-weui-mode="{{mode}}">123</view>

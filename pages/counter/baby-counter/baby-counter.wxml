@@ -1,2 +1,2 @@
-<!--pages/counter/baby-counter/baby-counter.wxml-->
-<text>pages/counter/baby-counter/baby-counter.wxml</text>
+<page-meta root-font-size="system"></page-meta>
+<view class="page" data-weui-theme="{{theme}}" data-weui-mode="{{mode}}">123</view>

@@ -1,6 +1,6 @@
 // pages/counter/baby-counter/baby-counter.js
 Page({
-
+  mixins: [require('../../../mixin/common')],
   /**
    * 页面的初始数据
    */
