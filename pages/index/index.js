@@ -5,6 +5,15 @@ Page({
     inputVal: '',
     list: [
       {
+        id: 'numerology',
+        name: '命理',
+        open: false,
+        pages: [{
+          name: '生辰八字',
+          path: '/pages/numerology/birth/birth',
+        }],
+      },
+      {
         id: 'timer',
         name: '计时器',
         open: false,

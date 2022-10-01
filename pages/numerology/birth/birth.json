@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "lunar-date-picker": "/components/lunar-date-picker/lunar-date-picker"
+  }
+}

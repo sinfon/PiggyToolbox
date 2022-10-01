@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/logs/logs",
     "pages/timer/baby-timer/baby-timer",
-    "pages/counter/baby-counter/baby-counter"
+    "pages/counter/baby-counter/baby-counter",
+    "pages/numerology/birth/birth"
   ],
   "window": {
     "backgroundTextStyle": "light",
