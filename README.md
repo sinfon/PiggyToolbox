@@ -21,4 +21,4 @@
 ## 参考链接
 
 - [微信小程序公农历日期选择器组件(rui-datepicker-wxapp)](https://github.com/chenruifu/rui-datepicker-wxapp)
-
+- [生辰八字是什么？科普扫盲向](https://zhuanlan.zhihu.com/p/471294437)

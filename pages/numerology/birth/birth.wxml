@@ -1,2 +1,10 @@
 <page-meta root-font-size="system"></page-meta>
-<view class="page" data-weui-theme="{{theme}}" data-weui-mode="{{mode}}"></view>
+<view class="page" data-weui-theme="{{theme}}" data-weui-mode="{{mode}}">
+  <lunar-date-picker id="lunar-date-picker" bind:confirm="confirmDateSelected"></lunar-date-picker>
+
+  <form bindsubmit="formSubmit">
+    <view class="date_input">
+      <input type="text" placeholder="请选择日期" value="{{dateStr}}" disabled="true" bindtap="showDatepicker" />
+    </view>
+  </form>
+</view>

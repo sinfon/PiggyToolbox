@@ -1,11 +1,12 @@
-// pages/numerology/birth/birth.js
 Page({
   mixins: [require('../../../mixin/common')],
   /**
    * 页面的初始数据
    */
   data: {
-
+    dateStr: '',
+    date: '',
+    hour: '',
   },
 
   /**
@@ -62,5 +63,26 @@ Page({
    */
   onShareAppMessage() {
 
-  }
+  },
+
+  showDatepicker(event) {
+    let date = this.data['date'];
+    let hour = this.data['hour'];
+    // 获取日期组件对象实例，并初始化配置
+    this.selectComponent("#lunar-date-picker").init({
+      date: date,
+      hour: hour,
+      lunar: false
+    });
+  },
+
+  confirmDateSelected(event) {
+    let json = {};
+    json['date'] = event.detail.year + '-' + event.detail.month + '-' + event.detail.day;
+    json['hour'] = event.detail.hour;
+    json['dateStr'] = event.detail.thisStr;
+    // 更新数据
+    this.setData(json);
+    console.log(this.data)
+  },
 })
