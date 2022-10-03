@@ -1,1 +1,113 @@
 /* pages/counter/baby-counter/baby-counter.wxss */
+.weui-flex {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  align-items: center
+}
+
+.weui-cells_show {
+  opacity: 1;
+  -webkit-transform: translateY(0);
+  transform: translateY(0)
+}
+
+.date-space {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.date {
+  text-align: left;
+  align-items: center;
+  font-size: 1.1764705882352942rem;
+  font-weight: 400;
+}
+
+.date-space__btn {
+  width: 30px;
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[data-weui-theme=dark] .date-space__btn {
+  -webkit-filter: invert(100) hue-rotate(180deg);
+  filter: invert(100) hue-rotate(180deg)
+}
+
+.date-space__btn-hover {
+  background-color: grey;
+}
+
+.date-space__img {
+  width: 20px;
+  height: 20px;
+}
+
+.baby-daily-records {
+  padding: 20px 0;
+}
+
+.baby-daily-records__item {
+  margin: 10px 0;
+  background-color: var(--weui-BG-2);
+  border-radius: 2px;
+  overflow: hidden
+}
+
+.baby-daily-records__item:first-child {
+  margin-top: 0px
+}
+
+.baby-daily-records__item-hover {
+  background-color: var(--weui-BG-3);
+}
+
+.baby-daily-records__item-hd {
+  padding: 20px;
+  -webkit-transition: opacity .3s;
+  transition: opacity .3s
+}
+
+.baby-daily-records__item-hd_show {
+  opacity: .4
+}
+
+.baby-daily-records__item-bd {
+  height: 0;
+  overflow: hidden
+}
+
+.baby-daily-records__item-bd_show {
+  height: auto
+}
+
+.baby-daily-records__img {
+  width: 30px;
+  height: 30px;
+}
+
+.baby-daily-records__option {
+  width: 30px;
+  height: 30px;
+  margin: 0 10px;
+}
+
+[data-weui-theme=dark] .baby-daily-records__option {
+  -webkit-filter: invert(100) hue-rotate(180deg);
+  filter: invert(100) hue-rotate(180deg)
+}
+
+.baby-daily-records__option-hover {
+  background-color: grey;
+}
+
+.export-btn-hover {
+  filter: invert(100) hue-rotate(180deg)
+}

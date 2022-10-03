@@ -1,2 +1,49 @@
 <page-meta root-font-size="system"></page-meta>
-<view class="page" data-weui-theme="{{theme}}" data-weui-mode="{{mode}}">123</view>
+<view class="page" data-weui-theme="{{theme}}" data-weui-mode="{{mode}}">
+  <view aria-role="alert" class="fadeIn {{hideMinusFailToast ? 'fadeOut' : ''}}" wx:if="{{minusFailToast}}">
+    <view class="weui-mask_transparent"></view>
+    <view class="weui-toast weui-toast_text-more">
+      <i class="weui-icon-warn weui-icon_toast"></i>
+      <view class="weui-toast__content">我是有下限的</view>
+    </view>
+  </view>
+
+  <view class="page__bd page__bd_spacing">
+    <view class="date-space">
+      <view class="date-space__btn" hover-class="date-space__btn-hover" bindtap="loadPrevDayRecords">
+        <image aria-role="button" class="date-space__img" src="/images/icon_prev.png"></image>
+      </view>
+      <view>{{dateStr}}</view>
+      <view class="date-space__btn" hover-class="date-space__btn-hover" bindtap="loadNextDayRecords">
+        <image aria-role="button" class="date-space__img" src="/images/icon_next.png"></image>
+      </view>
+    </view>
+    <view class="baby-daily-records">
+      <block wx:for="{{records}}" wx:key="*this">
+        <view class="baby-daily-records__item" hover-class="baby-daily-records__item-hover">
+          <view id="{{item.itemEnumName}}" class="weui-flex baby-daily-records__item-hd  {{item.open ? 'baby-daily-records__item-hd_show' : ''}}" bindtap="recordToggle">
+            <view class="weui-flex__item">{{item.name}}</view>
+            <view class="weui-flex__item">{{item.num}}</view>
+            <view data-item-enum-name="{{item.itemEnumName}}" class="baby-daily-records__option" hover-class="baby-daily-records__option-hover" bindtap="plus">
+              <image aria-role="button" class="baby-daily-records__img" src="/images/icon_plus.png"></image>
+            </view>
+            <view data-item-enum-name="{{item.itemEnumName}}" class="baby-daily-records__option" hover-class="baby-daily-records__option-hover">
+              <image aria-role="button" class="baby-daily-records__img" src="/images/icon_extra_line.png"></image>
+            </view>
+          </view>
+          <view aria-hidden="{{item.open ? 'false' : 'true'}}" class="baby-daily-records__item-bd {{item.open ? 'baby-daily-records__item-bd_show' : ''}}">
+            <view class="weui-cells {{item.open ? 'weui-cells_show' : ''}}">
+              <block wx:for="{{item.details}}" wx:for-item="detail" wx:key="*this">
+                <view class="weui-cell">
+                  <view class="weui-cell__bd">{{detail.timeStr}}</view>
+                  <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </view>
+              </block>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+    <view class="weui-btn weui-btn_primary" hover-class="export-btn-hover" aria-role="button">导出为图片保存</view>
+  </view>
+</view>
