@@ -96,7 +96,6 @@
 .baby-daily-records__option {
   width: 30px;
   height: 30px;
-  margin: 0 10px;
 }
 
 [data-weui-theme=dark] .baby-daily-records__option {
@@ -104,10 +103,7 @@
   filter: invert(100) hue-rotate(180deg)
 }
 
-.baby-daily-records__option-hover {
-  background-color: grey;
+.export-btn-hover {
+  background-color: orange;
 }
 
-.export-btn-hover {
-  filter: invert(100) hue-rotate(180deg)
-}

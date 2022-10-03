@@ -1,4 +1,5 @@
 // pages/counter/baby-counter/baby-counter.js
+import DateTimePicker from "../../../utils/date-time-picker.js"
 
 const util = require('../../../utils/util.js')
 const BabyDailyRecordItemEnum = require("../../../js/model/baby-counter/baby-daily-record-item-enum").BabyDailyRecordItemEnum
@@ -36,9 +37,33 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    this.loadDateTimePicker()
+
     const now = new Date()
     const todayDateStr = util.formatDate(now)
     this.refreshRecords(todayDateStr, now)
+  },
+
+  loadDateTimePicker() {
+    // 获取完整的年月日 时分秒，以及默认显示的数组
+    var obj = DateTimePicker.dateTimePicker();
+    this.setData({
+      dateTime: obj.dateTime,
+      dateTimeArray: obj.dateTimeArray,
+    });
+  },
+
+  onDateTimeColumnChange(e) {
+    console.log(e.detail)
+    var arr = this.data.dateTime, dateArr = this.data.dateTimeArray;
+    // Picker 的第 e.detail.column 列发生了变更，变更为了对应列的第 e.detail.value 个元素
+    arr[e.detail.column] = e.detail.value;
+    // 月份变动时，对应的日期范围需要重载！
+    dateArr[2] = DateTimePicker.getMonthDay(dateArr[0][arr[0]], dateArr[1][arr[1]]);
+    this.setData({
+      dateTimeArray: dateArr,
+      dateTime: arr
+    });
   },
 
   refreshRecords(dateStr, date) {
@@ -88,26 +113,13 @@ Page({
     wx.setStorageSync(key, record)
   },
 
-  getBabyDailyRecordKey(dateStr, itemEnum) {
-    return 'baby-daily-record:' + dateStr + ':' + itemEnum.name
+  clearBabyDailyRecord(dateStr, itemEnum) {
+    const key = this.getBabyDailyRecordKey(dateStr, itemEnum)
+    wx.removeStorageSync(key)
   },
 
-  createDefaultRecordsToday() {
-    const keys = Object.keys(BabyDailyRecordItemEnum)
-    let records = []
-    for (let key of keys) {
-      const itemEnum = BabyDailyRecordItemEnum[key]
-      console.log(key, itemEnum)
-      let record = {
-        id: key,
-        name: item.name,
-        open: false
-      }
-      records.push(record)
-      this.setBabyDailyRecordToday(itemEnum, record)
-    }
-
-    return records
+  getBabyDailyRecordKey(dateStr, itemEnum) {
+    return 'baby-daily-record:' + dateStr + ':' + itemEnum.name
   },
 
   /**
@@ -180,33 +192,43 @@ Page({
     const itemEnum = BabyDailyRecordItemEnum[itemEnumName]
     const dateStr = this.data.dateStr
     let record = this.getBabyDailyRecord(dateStr, itemEnum)
-    if (record === null || record === undefined || record === "" || record.num === 0) {
+    if (record === null || record === undefined || record === "" || record.details.length === 0) {
       this.openMinusFailToast()
     } else {
-      record.num = record.num - 1
       this.setBabyDailyRecord(dateStr, itemEnum, record)
       this.refreshRecords(dateStr)
     }
   },
-  plus(e) {
+
+  onDateTimeChange(e) {
+    const selectedDateTime = e.detail.value
+    const selectedYear = this.data.dateTimeArray[0][selectedDateTime[0]]
+    const selectedMonth = this.data.dateTimeArray[1][selectedDateTime[1]]
+    const selectedDate = this.data.dateTimeArray[2][selectedDateTime[2]]
+    const selectedHour = this.data.dateTimeArray[3][selectedDateTime[3]]
+    const selectedMinute = this.data.dateTimeArray[4][selectedDateTime[4]]
+    const selectedSecond = this.data.dateTimeArray[5][selectedDateTime[5]]
+    const date = new Date(selectedYear, selectedMonth - 1, selectedDate, selectedHour, selectedMinute, selectedSecond)
+    console.log(e)
     const itemEnumName = e.currentTarget.dataset.itemEnumName
+    this.plus(date, itemEnumName)
+  },
+  plus(date, itemEnumName) {
     const itemEnum = BabyDailyRecordItemEnum[itemEnumName]
-    const dateStr = this.data.dateStr
+    const dateStr = util.formatDate(date)
     let record = this.getBabyDailyRecord(dateStr, itemEnum)
-    if (record === null || record === undefined || record === "" || record.num === 0) {
+    if (record === null || record === undefined || record === "") {
       record = this.createDefaultBabyDailyRecord(itemEnum)
     } 
 
-    record.num = record.num + 1
-    const now = new Date()
     let detail = {
-      timeId: now.getTime(),
-      timeStr: util.formatTime(now)
+      timeId: date.getTime(),
+      timeStr: util.formatTime(date)
     }
     record.details.push(detail)
 
     this.setBabyDailyRecord(dateStr, itemEnum, record)
-    this.refreshRecords(dateStr)
+    this.refreshRecords(dateStr, date)
   },
   loadPrevDayRecords() {
     const currentDate = this.data.date
@@ -220,5 +242,27 @@ Page({
     const nextDate = new Date(currentDate.getTime() + 24 * 60 * 60 * 1000)
     const nextDateStr = util.formatDate(nextDate)
     this.refreshRecords(nextDateStr, nextDate)
+  },
+
+  clearRecords4SelectedDay() {
+    const dateStr = this.data.dateStr
+    wx.showModal({
+      title: "清除记录",
+      content: "确定清除 " + dateStr + " 的记录？\n这些记录将永久删除！",
+      cancelColor: 'cancelColor',
+      success: res => {
+        if (res.cancel) {
+          return
+        }
+        
+        const keys = Object.keys(BabyDailyRecordItemEnum)
+        for (let key of keys) {
+          const itemEnum = BabyDailyRecordItemEnum[key]
+          this.clearBabyDailyRecord(dateStr, itemEnum)
+        }
+
+        this.refreshRecords(dateStr)
+      }
+    })
   },
 })

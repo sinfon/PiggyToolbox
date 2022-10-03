@@ -23,12 +23,12 @@
         <view class="baby-daily-records__item" hover-class="baby-daily-records__item-hover">
           <view id="{{item.itemEnumName}}" class="weui-flex baby-daily-records__item-hd  {{item.open ? 'baby-daily-records__item-hd_show' : ''}}" bindtap="recordToggle">
             <view class="weui-flex__item">{{item.name}}</view>
-            <view class="weui-flex__item">{{item.num}}</view>
-            <view data-item-enum-name="{{item.itemEnumName}}" class="baby-daily-records__option" hover-class="baby-daily-records__option-hover" bindtap="plus">
-              <image aria-role="button" class="baby-daily-records__img" src="/images/icon_plus.png"></image>
-            </view>
-            <view data-item-enum-name="{{item.itemEnumName}}" class="baby-daily-records__option" hover-class="baby-daily-records__option-hover">
-              <image aria-role="button" class="baby-daily-records__img" src="/images/icon_extra_line.png"></image>
+            <view class="weui-flex__item">{{item.details.length}}</view>
+            <view class="baby-daily-records__option">
+              <!-- catchtap="stop" 避免冒泡 -->
+              <picker data-item-enum-name="{{item.itemEnumName}}" mode="multiSelector" range="{{dateTimeArray}}" value="{{dateTime}}" catchtap="stop" bindcolumnchange="onDateTimeColumnChange" bindchange="onDateTimeChange">
+                <image aria-role="button" class="baby-daily-records__img" src="/images/icon_plus.png"></image>
+              </picker>
             </view>
           </view>
           <view aria-hidden="{{item.open ? 'false' : 'true'}}" class="baby-daily-records__item-bd {{item.open ? 'baby-daily-records__item-bd_show' : ''}}">
@@ -45,5 +45,6 @@
       </block>
     </view>
     <view class="weui-btn weui-btn_primary" hover-class="export-btn-hover" aria-role="button">导出为图片保存</view>
+    <view class="weui-btn weui-btn_default" hover-class="export-btn-hover" aria-role="button" bindtap="clearRecords4SelectedDay">清除记录</view>
   </view>
 </view>
