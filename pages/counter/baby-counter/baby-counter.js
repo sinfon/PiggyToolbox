@@ -55,7 +55,8 @@ Page({
 
   onDateTimeColumnChange(e) {
     console.log(e.detail)
-    var arr = this.data.dateTime, dateArr = this.data.dateTimeArray;
+    var arr = this.data.dateTime,
+      dateArr = this.data.dateTimeArray;
     // Picker 的第 e.detail.column 列发生了变更，变更为了对应列的第 e.detail.value 个元素
     arr[e.detail.column] = e.detail.value;
     // 月份变动时，对应的日期范围需要重载！
@@ -173,7 +174,9 @@ Page({
 
   recordToggle(e) {
     // 开关不需要进行缓存
-    const { id } = e.currentTarget;
+    const {
+      id
+    } = e.currentTarget;
     const records = this.getBabyDailyRecords(this.data.dateStr)
     for (let i = 0, len = records.length; i < len; ++i) {
       const itemEnumName = records[i].itemEnumName
@@ -188,16 +191,31 @@ Page({
     this.refreshRecords(this.data.dateStr)
   },
   minus(e) {
+    const index = e.currentTarget.dataset.index
     const itemEnumName = e.currentTarget.dataset.itemEnumName
-    const itemEnum = BabyDailyRecordItemEnum[itemEnumName]
-    const dateStr = this.data.dateStr
-    let record = this.getBabyDailyRecord(dateStr, itemEnum)
-    if (record === null || record === undefined || record === "" || record.details.length === 0) {
-      this.openMinusFailToast()
-    } else {
-      this.setBabyDailyRecord(dateStr, itemEnum, record)
-      this.refreshRecords(dateStr)
-    }
+    wx.showModal({
+      title: "删除",
+      content: "确定要删除这条记录么？",
+      cancelColor: 'cancelColor',
+      success: res => {
+        if (res.cancel) {
+          return
+        }
+
+        const itemEnum = BabyDailyRecordItemEnum[itemEnumName]
+        const dateStr = this.data.dateStr
+        let record = this.getBabyDailyRecord(dateStr, itemEnum)
+        if (record === null || record === undefined || record === "" || record.details.length === 0) {
+          this.openMinusFailToast()
+        } else {
+          console.log(record.details)
+          record.details.splice(index, 1)
+          console.log(record.details)
+          this.setBabyDailyRecord(dateStr, itemEnum, record)
+          this.refreshRecords(dateStr)
+        }
+      }
+    })
   },
 
   onDateTimeChange(e) {
@@ -219,7 +237,7 @@ Page({
     let record = this.getBabyDailyRecord(dateStr, itemEnum)
     if (record === null || record === undefined || record === "") {
       record = this.createDefaultBabyDailyRecord(itemEnum)
-    } 
+    }
 
     let detail = {
       timeId: date.getTime(),
@@ -244,6 +262,32 @@ Page({
     this.refreshRecords(nextDateStr, nextDate)
   },
 
+  exportAsJson() {
+    const dateStr = this.data.dateStr
+    const records = []
+    const keys = Object.keys(BabyDailyRecordItemEnum)
+    for (let key of keys) {
+      const itemEnum = BabyDailyRecordItemEnum[key]
+      let record = this.getBabyDailyRecord(dateStr, itemEnum)
+      if (record === null || record === undefined || record === "") {
+        record = this.createDefaultBabyDailyRecord(itemEnum)
+      }
+      records.push(record)
+    }
+
+    wx.setClipboardData({
+      data: JSON.stringify({
+        dateStr: dateStr,
+        records: records,
+      }),
+      success: function (res) {
+        wx.showToast({
+          title: '复制成功',
+        });
+      }
+    });
+  },
+
   clearRecords4SelectedDay() {
     const dateStr = this.data.dateStr
     wx.showModal({
@@ -254,7 +298,7 @@ Page({
         if (res.cancel) {
           return
         }
-        
+
         const keys = Object.keys(BabyDailyRecordItemEnum)
         for (let key of keys) {
           const itemEnum = BabyDailyRecordItemEnum[key]

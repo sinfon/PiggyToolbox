@@ -65,10 +65,6 @@
   margin-top: 0px
 }
 
-.baby-daily-records__item-hover {
-  background-color: var(--weui-BG-3);
-}
-
 .baby-daily-records__item-hd {
   padding: 20px;
   -webkit-transition: opacity .3s;
@@ -93,6 +89,23 @@
   height: 30px;
 }
 
+.baby-daily-records-detail {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.baby-daily-records-detail__img {
+  width: 30px;
+  height: 30px;
+}
+
+[data-weui-theme=dark] .baby-daily-records-detail__img {
+  -webkit-filter: invert(100) hue-rotate(180deg);
+  filter: invert(100) hue-rotate(180deg)
+}
+
 .baby-daily-records__option {
   width: 30px;
   height: 30px;
@@ -107,3 +120,6 @@
   background-color: orange;
 }
 
+.btn-space {
+  display: block;
+}
