@@ -117,7 +117,7 @@
 }
 
 .export-btn-hover {
-  background-color: orange;
+  background-color: silver;
 }
 
 .btn-space {

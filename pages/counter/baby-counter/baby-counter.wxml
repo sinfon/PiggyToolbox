@@ -49,9 +49,9 @@
       </block>
     </view>
     <view class="btn-space">
-      <view class="weui-btn weui-btn_primary" hover-class="export-btn-hover" aria-role="button">导出为图片保存</view>
       <view class="weui-btn weui-btn_primary" hover-class="export-btn-hover" aria-role="button" bindtap="exportAsJson">复制元数据</view>
       <view class="weui-btn weui-btn_default" hover-class="export-btn-hover" aria-role="button" bindtap="clearRecords4SelectedDay">清除记录</view>
+      <view class="weui-btn weui-btn_cell-warn" hover-class="export-btn-hover" aria-role="button" bindtap="exportAsImage">导出为图片保存</view>
     </view>
   </view>
 </view>

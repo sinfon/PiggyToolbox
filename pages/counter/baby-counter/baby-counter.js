@@ -262,6 +262,14 @@ Page({
     this.refreshRecords(nextDateStr, nextDate)
   },
 
+  exportAsImage() {
+    wx.showModal({
+      title: '功能开发中',
+      content: '敬请期待……',
+      cancelColor: 'cancelColor',
+    })
+  },
+
   exportAsJson() {
     const dateStr = this.data.dateStr
     const records = []
