@@ -4,24 +4,24 @@ Page({
     inputShowed: false,
     inputVal: '',
     list: [
-      {
-        id: 'numerology',
-        name: '命理',
-        open: false,
-        pages: [{
-          name: '生辰八字',
-          path: '/pages/numerology/birth/birth',
-        }],
-      },
-      {
-        id: 'timer',
-        name: '计时器',
-        open: false,
-        pages: [{
-          name: '宝宝计时器',
-          path: '/pages/timer/baby-timer/baby-timer',
-        }],
-      },
+      // {
+      //   id: 'numerology',
+      //   name: '命理',
+      //   open: false,
+      //   pages: [{
+      //     name: '生辰八字',
+      //     path: '/pages/numerology/birth/birth',
+      //   }],
+      // },
+      // {
+      //   id: 'timer',
+      //   name: '计时器',
+      //   open: false,
+      //   pages: [{
+      //     name: '宝宝计时器',
+      //     path: '/pages/timer/baby-timer/baby-timer',
+      //   }],
+      // },
       {
         id: 'counter',
         name: '计数器',

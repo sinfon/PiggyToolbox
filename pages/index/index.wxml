@@ -3,7 +3,7 @@
   <view class="page__bd page__bd_spacing">
 
     <!-- 搜索框 -->
-    <view class="searchbar weui-search-bar {{inputShowed ? 'weui-search-bar_focusing' : ''}}" id="searchBar">
+    <view hidden="true" class="searchbar weui-search-bar {{inputShowed ? 'weui-search-bar_focusing' : ''}}" id="searchBar">
       <form class="weui-search-bar__form" aria-role="combobox" aria-haspopup="true" aria-expanded="{{inputVal.length > 0 ? 'true' : 'false'}}" aria-owns="searchResult">
         <view class="weui-search-bar__box">
           <i class="weui-icon-search"></i>
