@@ -34,7 +34,12 @@ Page({
     ],
   },
   kindToggle(e) {
-    const { id } = e.currentTarget; const { list } = this.data;
+    const {
+      id
+    } = e.currentTarget;
+    const {
+      list
+    } = this.data;
     for (let i = 0, len = list.length; i < len; ++i) {
       if (list[i].id == id) {
         list[i].open = !list[i].open;
@@ -71,5 +76,12 @@ Page({
     this.setData({
       inputVal: e.detail.value,
     });
+  },
+  
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage() {
+
   },
 });
