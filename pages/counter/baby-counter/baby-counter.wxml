@@ -35,9 +35,20 @@
             <view class="weui-cells {{item.open ? 'weui-cells_show' : ''}}">
               <block wx:for="{{item.details}}" wx:for-item="detail" wx:key="*this">
                 <view class="weui-cell">
-                  <view class="baby-daily-records-detail">{{index}}</view>
-                  <view class="weui-cell__bd">{{detail.timeStr}}</view>
-                  <view data-index="{{index}}" data-item-enum-name="{{item.itemEnumName}}" class="baby-daily-records-detail" bindtap="minus">
+                  <view class="baby-daily-records-detail">{{index + 1}}</view>
+                  <view class="weui-cell__bd">
+                    <view class="baby-daily-records-detail__time">{{detail.timeStr}}</view>
+                    <view wx:if="{{detail.note !== undefined && detail.note !== '' && detail.note !== null}}" class="baby-daily-records-detail__note">
+                      <image aria-role="button" class="baby-daily-records-detail__note-img" src="/images/icon_nav_layout.png"></image>
+                      <view>{{detail.note}}</view>
+                    </view>
+                    <view class="baby-daily-records-detail__note" data-index="{{index}}" data-item-enum-name="{{item.itemEnumName}}">
+                      <image aria-role="button" class="baby-daily-records-detail__note-img" src="/images/icon_editor.png"></image>
+                      <input data-index="{{index}}" data-item-enum-name="{{item.itemEnumName}}" class="weui-input" placeholder-class="weui-input__placeholder" placeholder="点击添加/修改备注" value="{{detail.value}}" bindfocus="onDetailNoteEditFocus" bindblur="onDetailNoteEditBlur" bindinput="updateDetailNoteValue"/>
+                      <view data-index="{{index}}" data-item-enum-name="{{item.itemEnumName}}" hidden="{{detail.confirmBtnHidden}}" class="baby-daily-records-detail__note-btn" bindtap="saveDetailNote">确定</view>
+                    </view>
+                  </view>
+                  <view data-index="{{index}}" data-item-enum-name="{{item.itemEnumName}}" class="baby-daily-records-detail" catchtap="minus">
                     <image aria-role="button" class="baby-daily-records-detail__img" src="/images/icon_minus.png"></image>
                   </view>
                   <view class="weui-cell__ft weui-cell__ft_in-access"></view>

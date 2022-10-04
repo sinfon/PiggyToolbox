@@ -96,6 +96,26 @@
   align-items: center;
 }
 
+.baby-daily-records-detail__time {
+  color: darkgrey;
+}
+
+.baby-daily-records-detail__note {
+  display: flex;
+  align-items: center;
+}
+
+.baby-daily-records-detail__note-img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.baby-daily-records-detail__note-btn {
+  width: 56px;
+  height: 20px;
+}
+
 .baby-daily-records-detail__img {
   width: 30px;
   height: 30px;

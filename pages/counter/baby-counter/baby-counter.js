@@ -128,6 +128,21 @@ Page({
     return 'baby-daily-record:' + dateStr + ':' + itemEnum.name
   },
 
+  modifyBabyDailyRecordDetail(dateStr, itemEnum, index, modifyFunc) {
+    const record = this.getBabyDailyRecord(dateStr, itemEnum)
+    if (record === null || record === undefined || record === "" || index < 0 || record.details.length <= index) {
+      // 没有可选 detail 存在
+      return
+    }
+
+    let detail = record.details[index]
+    console.log(detail)
+    modifyFunc(detail)
+    console.log(detail)
+    this.setBabyDailyRecord(dateStr, itemEnum, record)
+    this.refreshRecords(dateStr)
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -195,6 +210,7 @@ Page({
 
     this.refreshRecords(this.data.dateStr)
   },
+
   minus(e) {
     const index = e.currentTarget.dataset.index
     const itemEnumName = e.currentTarget.dataset.itemEnumName
@@ -213,12 +229,56 @@ Page({
         if (record === null || record === undefined || record === "" || record.details.length === 0) {
           this.openMinusFailToast()
         } else {
-          console.log(record.details)
           record.details.splice(index, 1)
-          console.log(record.details)
           this.setBabyDailyRecord(dateStr, itemEnum, record)
           this.refreshRecords(dateStr)
         }
+      }
+    })
+  },
+
+  onDetailNoteEditFocus(e) {
+    const index = e.currentTarget.dataset.index
+    const itemEnumName = e.currentTarget.dataset.itemEnumName
+    this.modifyBabyDailyRecordDetail(this.data.dateStr, BabyDailyRecordItemEnum[itemEnumName], index, detail => {
+      detail.confirmBtnHidden = false
+    })
+  },
+
+  onDetailNoteEditBlur(e) {
+    const index = e.currentTarget.dataset.index
+    const itemEnumName = e.currentTarget.dataset.itemEnumName
+    this.modifyBabyDailyRecordDetail(this.data.dateStr, BabyDailyRecordItemEnum[itemEnumName], index, detail => {
+      detail.confirmBtnHidden = true
+    })
+  },
+
+  updateDetailNoteValue(e) {
+    const index = e.currentTarget.dataset.index
+    const itemEnumName = e.currentTarget.dataset.itemEnumName
+    const value = e.detail.value
+    this.modifyBabyDailyRecordDetail(this.data.dateStr, BabyDailyRecordItemEnum[itemEnumName], index, detail => {
+      detail.value = value
+    })
+  },
+
+  saveDetailNote(e) {
+    const index = e.currentTarget.dataset.index
+    const itemEnumName = e.currentTarget.dataset.itemEnumName
+    wx.showModal({
+      title: "修改",
+      content: "确定要执行修改么？",
+      cancelColor: 'cancelColor',
+      success: res => {
+        if (res.cancel) {
+          return
+        }
+
+        this.modifyBabyDailyRecordDetail(this.data.dateStr, BabyDailyRecordItemEnum[itemEnumName], index, detail => {
+          detail.confirmBtnHidden = true
+          detail.note = detail.value
+          detail.value = undefined
+        })
       }
     })
   },
@@ -236,6 +296,7 @@ Page({
     const itemEnumName = e.currentTarget.dataset.itemEnumName
     this.plus(date, itemEnumName)
   },
+
   plus(date, itemEnumName) {
     const itemEnum = BabyDailyRecordItemEnum[itemEnumName]
     const dateStr = util.formatDate(date)
@@ -246,13 +307,15 @@ Page({
 
     let detail = {
       timeId: date.getTime(),
-      timeStr: util.formatTime(date)
+      timeStr: util.formatTime(date),
+      confirmBtnHidden: true,
     }
     record.details.push(detail)
 
     this.setBabyDailyRecord(dateStr, itemEnum, record)
     this.refreshRecords(dateStr, date)
   },
+
   loadPrevDayRecords() {
     const currentDate = this.data.date
     const prevDate = new Date(currentDate.getTime() - 24 * 60 * 60 * 1000)
