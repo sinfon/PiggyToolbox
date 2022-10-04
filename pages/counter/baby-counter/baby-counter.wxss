@@ -111,6 +111,11 @@
   margin-right: 10px;
 }
 
+[data-weui-theme=dark] .baby-daily-records-detail__note-img {
+  -webkit-filter: invert(100) hue-rotate(180deg);
+  filter: invert(100) hue-rotate(180deg)
+}
+
 .baby-daily-records-detail__note-btn {
   width: 56px;
   height: 20px;
