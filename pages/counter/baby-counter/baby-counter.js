@@ -70,10 +70,15 @@ Page({
   refreshRecords(dateStr, date) {
     const records = this.getBabyDailyRecords(dateStr)
     this.setData({
-      date: date,
       dateStr: dateStr,
       records: records
     })
+
+    if (date != null && date != undefined) {
+      this.setData({
+        date: date
+      })
+    }
   },
 
   getBabyDailyRecords(dateStr) {
