@@ -38,6 +38,16 @@ const BabyDailyRecordItemEnum = Object.freeze({
     code: 7,
     name: "TEMPERATURE",
     desc: "体温",
+  },
+  WEIGHT: {
+    code: 8,
+    name: "WEIGHT",
+    desc: "体重",
+  },
+  BW_CARD: {
+    code: 9,
+    name: "BW_CARD",
+    desc: "黑白卡",
   }
 })
 
