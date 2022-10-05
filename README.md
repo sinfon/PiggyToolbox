@@ -9,6 +9,12 @@
 - [WeUI for 小程序 为微信小程序量身设计](https://github.com/Tencent/weui-wxss)
 - [iconfont-阿里巴巴矢量图标库](https://www.iconfont.cn/)
 
+## 计数器
+
+### 宝宝计数器
+
+> 已上线
+
 ## 命理
 
 ### 生辰八字
@@ -20,12 +26,6 @@
 ### 宝宝计时器
 
 > TODO
-
-## 计数器
-
-### 宝宝计数器
-
-> 已上线
 
 ## 参考链接
 
