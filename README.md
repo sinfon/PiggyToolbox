@@ -1,5 +1,9 @@
 # 小猪手（Piggy Toolbox）
 
+扫码体验
+
+![小程序码](images/share/mp-qr-code.jpg)
+
 ## 引用
 
 - [WeUI for 小程序 为微信小程序量身设计](https://github.com/Tencent/weui-wxss)
