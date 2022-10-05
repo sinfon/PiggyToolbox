@@ -63,13 +63,14 @@ Component({
 
       const records = JSON.parse(that.properties.recordsJson)
       records.forEach(record => {
+        const details = record.details
+        const times = details == undefined ? 0 : details.length
         tableRows.push({
           name: record.name,
-          value: '',
+          value: times + ' 次',
           desc: ''
         })
 
-        const details = record.details
         if (details != undefined && details.length > 0) {
           details.forEach(detail => {
             tableRows.push({
