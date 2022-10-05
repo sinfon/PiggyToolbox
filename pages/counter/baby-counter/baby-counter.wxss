@@ -94,6 +94,7 @@
   height: 30px;
   display: flex;
   align-items: center;
+  margin: 0 3px;
 }
 
 .baby-daily-records-detail__time {
@@ -119,6 +120,7 @@
 .baby-daily-records-detail__note-btn {
   width: 56px;
   height: 20px;
+  color: darkblue;
 }
 
 .baby-daily-records-detail__img {

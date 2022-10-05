@@ -136,9 +136,7 @@ Page({
     }
 
     let detail = record.details[index]
-    console.log(detail)
     modifyFunc(detail)
-    console.log(detail)
     this.setBabyDailyRecord(dateStr, itemEnum, record)
     this.refreshRecords(dateStr)
   },
@@ -242,6 +240,9 @@ Page({
     const itemEnumName = e.currentTarget.dataset.itemEnumName
     this.modifyBabyDailyRecordDetail(this.data.dateStr, BabyDailyRecordItemEnum[itemEnumName], index, detail => {
       detail.confirmBtnHidden = false
+      if (detail.value === undefined || detail.value === null || detail.value === '') {
+        detail.value = detail.note
+      }
     })
   },
 
@@ -331,10 +332,9 @@ Page({
   },
 
   exportAsImage() {
-    wx.showModal({
-      title: '功能开发中',
-      content: '敬请期待……',
-      cancelColor: 'cancelColor',
+    wx.navigateTo({
+      url: '/pages/counter/baby-counter/export/export?dateStr=' + this.data.dateStr +
+        '&recordsJson=' + JSON.stringify(this.data.records),
     })
   },
 

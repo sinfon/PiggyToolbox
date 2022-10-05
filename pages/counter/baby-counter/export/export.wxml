@@ -1,0 +1,5 @@
+<!--pages/counter/baby-counter/export/export.wxml-->
+<page-meta root-font-size="system"></page-meta>
+<view class="page" data-weui-theme="{{theme}}" data-weui-mode="{{mode}}">
+  <pic-generator dateStr="{{dateStr}}" recordsJson="{{recordsJson}}"/>
+</view>

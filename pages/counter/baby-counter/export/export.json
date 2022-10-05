@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "pic-generator": "/components/pic-generator/pic-generator"
+  }
+}

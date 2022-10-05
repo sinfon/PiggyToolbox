@@ -1,0 +1,21 @@
+<!--components/pic-generator/pic-generator.wxml-->
+<view class="generate-pic-box">
+  <view class="mask" wx:if="{{spinning}}">
+    <view class="mask-cont">
+      <view class="loading"></view><view class="loading-text">加载中...</view>
+    </view>
+  </view>
+  <block hidden="{{!spinning}}">
+    <canvas
+      class="canvas"
+      style="{{'width: ' + (canvasW) + 'px; height: ' + (canvasH) + 'px;'}}"
+      canvas-id="myCanvas"
+      hidden="{{canvasHidden}}"></canvas>
+    <view class="generate-pic-btm">
+      <view class="save-text">保存图片，分享给你的朋友</view>
+      <view class="save-btn-box">
+        <button class="weui-btn" type="primary" bindtap="save">保存图片</button>
+      </view>
+    </view>
+  </block>
+</view>
