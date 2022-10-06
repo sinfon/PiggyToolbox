@@ -44,7 +44,7 @@
                     </view>
                     <view class="baby-daily-records-detail__note" data-index="{{index}}" data-item-enum-name="{{item.itemEnumName}}">
                       <image aria-role="button" class="baby-daily-records-detail__note-img" src="/images/icon_editor.png"></image>
-                      <input data-index="{{index}}" data-item-enum-name="{{item.itemEnumName}}" class="weui-input" placeholder-class="weui-input__placeholder" placeholder="点击添加/修改备注" value="{{detail.value}}" bindfocus="onDetailNoteEditFocus" bindblur="onDetailNoteEditBlur" bindinput="updateDetailNoteValue"/>
+                      <input data-index="{{index}}" data-item-enum-name="{{item.itemEnumName}}" class="weui-input" placeholder-class="weui-input__placeholder" placeholder="点击添加/修改备注" value="{{detail.value}}" bindfocus="onDetailNoteEditFocus" bindblur="onDetailNoteEditBlur" bindinput="updateDetailNoteValue" />
                       <view data-index="{{index}}" data-item-enum-name="{{item.itemEnumName}}" hidden="{{detail.confirmBtnHidden}}" class="baby-daily-records-detail__note-btn" bindtap="saveDetailNote">确定</view>
                     </view>
                   </view>
@@ -60,9 +60,36 @@
       </block>
     </view>
     <view class="btn-space">
-      <view class="weui-btn weui-btn_primary" hover-class="export-btn-hover" aria-role="button" bindtap="exportAsJson">复制元数据</view>
-      <view class="weui-btn weui-btn_default" hover-class="export-btn-hover" aria-role="button" bindtap="exportAsImage">导出为图片保存</view>
-      <view class="weui-btn weui-btn_warn" hover-class="export-btn-hover" aria-role="button" bindtap="clearRecords4SelectedDay">清除记录</view>
+      <button class="weui-btn" type="primary" aria-role="button" bindtap="exportAsImage">导出为图片保存</button>
+      <view class="hr"></view>
+      <view class="btn-space-line">
+        <button class="weui-btn btn-mini" type="default" size="mini"  aria-role="button" bindtap="openImportViaJsonDialog">导入元数据</button>
+        <button class="weui-btn btn-mini" type="default" size="mini"  aria-role="button" bindtap="exportAsJson">复制元数据</button>
+      </view>
+      <view class="btn-space-line">
+        <button class="weui-btn btn-mini" type="warn" size="mini" aria-role="button" bindtap="clearRecords4SelectedDay">清除记录</button>
+        <button class="weui-btn btn-mini" type="default" size="mini" open-type="contact">使用反馈</button>
+      </view>
+    </view>
+    <view class="import-dialog" wx:if="{{importDialogEnabled}}">
+      <view class="import-dialog__input-area">
+        <view class="weui-cells weui-cells_form">
+            <view class="weui-cell" hover-class="weui-cell_active">
+                <view class="weui-cell__bd">
+                    <textarea class="weui-textarea" placeholder="请粘贴需要导入的元数据到这里" maxlength="100000" placeholder-class="weui-input__placeholder" value="{{importDialogInputValue}}" bindinput="updateImportDialogValue"></textarea>
+                    <view aria-role="option" class="weui-textarea-counter"><span>{{importDialogInputNum}}</span>/100000</view>
+                </view>
+            </view>
+        </view>
+      </view>
+      <view class="import-dialog__btn-area">
+        <view class="import-dialog__btn-area-line">
+          <button class="weui-btn btn-mini" type="primary" size="mini" aria-role="button" bindtap="confirmImportViaJsonWithCover">覆盖导入</button>
+          <button class="weui-btn btn-mini" type="primary" size="mini" aria-role="button" bindtap="confirmImportViaJsonWithConcat">追加导入</button>
+        </view>
+        <button class="weui-btn" type="warn" size="mini" aria-role="button" bindtap="clearImportDialogInputValue">清空</button>
+        <button class="weui-btn" type="default" size="mini" aria-role="button" bindtap="cancelImportViaJson">取消</button>
+      </view>
     </view>
   </view>
 </view>

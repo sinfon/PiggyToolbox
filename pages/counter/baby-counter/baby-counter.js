@@ -14,6 +14,9 @@ Page({
     hideMinusFailToast: false,
     records: [],
     dateStr: "",
+    importDialogEnabled: false,
+    importDialogInputValue: '',
+    importDialogInputNum: 0,
   },
 
   openMinusFailToast() {
@@ -215,7 +218,8 @@ Page({
     wx.showModal({
       title: "删除",
       content: "确定要删除这条记录么？",
-      cancelColor: 'cancelColor',
+      cancelColor: '#000000',
+      confirmColor: '#576895',
       success: res => {
         if (res.cancel) {
           return
@@ -269,7 +273,8 @@ Page({
     wx.showModal({
       title: "修改",
       content: "确定要执行修改么？",
-      cancelColor: 'cancelColor',
+      cancelColor: '#000000',
+      confirmColor: '#576895',
       success: res => {
         if (res.cancel) {
           return
@@ -364,12 +369,165 @@ Page({
     });
   },
 
+  openImportViaJsonDialog() {
+    const that = this
+    // 无论后续剪切板内容是否读取成功，都需要打开对话框
+    that.setData({
+      importDialogEnabled: true
+    })
+
+    // 读取剪切板内容，放入对话框的输入框
+    wx.getClipboardData({
+      success (res) {
+        const value = res.data
+        if (value !== undefined && value !== '') {
+          that.setData({
+            importDialogInputValue: res.data,
+            importDialogInputNum: value.length,
+          })
+        }
+      }
+    })
+  },
+
+  cancelImportViaJson() {
+    const that = this
+    that.setData({
+      importDialogEnabled: false
+    })
+  },
+
+  clearImportDialogInputValue() {
+    this.setData({
+      importDialogInputValue: '',
+      importDialogInputNum: 0
+    })
+  },
+
+  updateImportDialogValue(e) {
+    const value = e.detail.value
+    const num = value === undefined || value === '' ? 0 : value.length
+    this.setData({
+      importDialogInputValue: value,
+      importDialogInputNum: num
+    })
+  },
+
+  confirmImportViaJsonWithCover() {
+    const that = this
+    let metaData
+    try {
+      metaData = JSON.parse(that.data.importDialogInputValue)
+    } catch(e) {
+      // 结束处理流程
+      wx.showToast({
+        title: '数据格式错误',
+        image: '/images/icon_error_white.png'
+      })
+      return
+    }
+
+    const dateStr = metaData.dateStr
+    const records = metaData.records
+    wx.showModal({
+      title: '导入元数据',
+      content: '确定以覆盖方式导入 ' + dateStr + ' 的元数据？\n注意：原有数据将被彻底替换！',
+      cancelColor: '#000000',
+      confirmColor: '#576895',
+      success: res => {
+        if (res.cancel) {
+          return
+        }
+
+        // 实际执行导入
+        records.forEach(record => {
+          // 因为是覆盖导入，即使新的详情为空，也需要覆盖原来的数据
+          const details = record.details
+          const itemEnum = BabyDailyRecordItemEnum[record.itemEnumName]
+          let currentRecord = that.getBabyDailyRecord(dateStr, itemEnum)
+          if (currentRecord === undefined || currentRecord === null || currentRecord === '') {
+            currentRecord = that.createDefaultBabyDailyRecord(itemEnum)
+          }
+
+          currentRecord.details = details
+          that.setBabyDailyRecord(dateStr, itemEnum, currentRecord)
+        })
+
+        // 数据导入完毕，刷新对应页面
+        const ymdArray = dateStr.split('/')
+        that.refreshRecords(dateStr, new Date(ymdArray[0], ymdArray[1] - 1, ymdArray[2]))
+
+        // 关闭导入对话框
+        that.setData({
+          importDialogEnabled: false
+        })
+      }
+    })
+  },
+
+  confirmImportViaJsonWithConcat() {
+    const that = this
+    let metaData
+    try {
+      metaData = JSON.parse(that.data.importDialogInputValue)
+    } catch(e) {
+      // 结束处理流程
+      wx.showToast({
+        title: '数据格式错误',
+        image: '/images/icon_error_white.png'
+      })
+      return
+    }
+
+    const dateStr = metaData.dateStr
+    const records = metaData.records
+    wx.showModal({
+      title: '导入元数据',
+      content: '确定以追加方式导入 ' + dateStr + ' 的元数据？',
+      cancelColor: '#000000',
+      confirmColor: '#576895',
+      success: res => {
+        if (res.cancel) {
+          return
+        }
+
+        // 实际执行导入
+        records.forEach(record => {
+          const details = record.details
+          if (details === undefined || details === null || details.length === 0) {
+            // 没有需要导入的项
+            return
+          }
+
+          const itemEnum = BabyDailyRecordItemEnum[record.itemEnumName]
+          let currentRecord = that.getBabyDailyRecord(dateStr, itemEnum)
+          if (currentRecord === undefined || currentRecord === null || currentRecord === '') {
+            currentRecord = that.createDefaultBabyDailyRecord(itemEnum)
+          }
+
+          currentRecord.details = currentRecord.details.concat(details)
+          that.setBabyDailyRecord(dateStr, itemEnum, currentRecord)
+        })
+
+        // 数据导入完毕，刷新对应页面
+        const ymdArray = dateStr.split('/')
+        that.refreshRecords(dateStr, new Date(ymdArray[0], ymdArray[1] - 1, ymdArray[2]))
+
+        // 关闭导入对话框
+        that.setData({
+          importDialogEnabled: false
+        })
+      }
+    })
+  },
+
   clearRecords4SelectedDay() {
     const dateStr = this.data.dateStr
     wx.showModal({
       title: "清除记录",
       content: "确定清除 " + dateStr + " 的记录？\n这些记录将永久删除！",
-      cancelColor: 'cancelColor',
+      cancelColor: '#000000',
+      confirmColor: '#576895',
       success: res => {
         if (res.cancel) {
           return
