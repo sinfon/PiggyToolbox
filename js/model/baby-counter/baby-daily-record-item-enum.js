@@ -48,6 +48,16 @@ const BabyDailyRecordItemEnum = Object.freeze({
     code: 9,
     name: "BW_CARD",
     desc: "黑白卡",
+  },
+  VITAMIN_AD: {
+    code: 10,
+    name: "VITAMIN_AD",
+    desc: "维生素AD",
+  },
+  OTHER: {
+    code: 11,
+    name: "OTHER",
+    desc: "随心记",
   }
 })
 

@@ -3,20 +3,23 @@ page {
   font-size: 14px/1.2;
 }
 
-
-/*input*/
-.date_input {
+.date-input-area {
   text-align: center;
-  margin: 16px 0 0;
+  padding-top: 10px;
 }
 
-.date_input .p {
+[data-weui-theme=dark] .date-input-area {
+  -webkit-filter: invert(100) hue-rotate(180deg);
+  filter: invert(100) hue-rotate(180deg)
+}
+
+.date-input-area .p {
   padding: 0 0 8px;
   font-size: 1.3em;
   color: #fc0
 }
 
-.date_input input {
+.date-input-area input {
   height: 50px;
   font-size: 18px;
   border: 1px solid #444;

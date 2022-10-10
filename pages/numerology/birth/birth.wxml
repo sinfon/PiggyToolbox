@@ -1,10 +1,92 @@
 <page-meta root-font-size="system"></page-meta>
 <view class="page" data-weui-theme="{{theme}}" data-weui-mode="{{mode}}">
-  <lunar-date-picker id="lunar-date-picker" bind:confirm="confirmDateSelected"></lunar-date-picker>
+  <!-- <lunar-date-picker id="lunar-date-picker" bind:confirm="confirmDateSelected"></lunar-date-picker>
 
   <form bindsubmit="formSubmit">
     <view class="date_input">
       <input type="text" placeholder="请选择日期" value="{{dateStr}}" disabled="true" bindtap="showDatepicker" />
     </view>
-  </form>
+  </form> -->
+
+  <view class="date-input-area">
+    <input type="text" placeholder="请选择日期" value="{{dateStr}}" disabled="true" bindtap="showDatepicker" />
+  </view>
+
+  <view class="weui-article">
+    <view aria-role="heading" aria-level="4" class="weui-article__h1">生辰八字</view>
+    <view class="weui-article__section">
+      <view class="weui-article__h2">天干 & 地支</view>
+      <view class="weui-article__p">
+        十天干：甲、乙、丙、丁、戊、己、庚、辛、壬、癸
+      </view>
+      <view class="weui-article__p">
+        十二地支：子、丑、寅、卯、辰、巳、午、未、申、酉、戌、亥
+      </view>
+      <view class="weui-article__h2">四柱 & 八字</view>
+      <view class="weui-article__p">
+        人的生辰四柱：年、月、日、时
+      </view>
+      <view class="weui-article__p">
+        四柱可以分别用两个字（天干、地支）来表示，组合在一起构成八字
+      </view>
+      <view class="weui-article__h2">年柱</view>
+      <view class="weui-article__p">
+        从万年历可以查出当年的年柱。六十甲子便是一个轮回。
+      </view>
+      <view class="weui-article__p">
+        注意：这里的每一年是以立春为界，而不是常规认知里的春节。而且立春是精确到分钟的……这一天里出生的宝宝，会属于不同的年份。
+      </view>
+      <view class="weui-article__h2">月柱</view>
+      <view class="weui-article__section">
+        <view class="weui-article__h3">起月柱</view>
+        <view class="weui-article__p">
+          起月柱必须按二十四节气。一月是寅月，之后依次类推。
+        </view>
+        <view class="weui-article__p">
+          一月立春，二月惊蛰，三月清明，四月立夏
+        </view>
+        <view class="weui-article__p">
+          五月芒种，六月小暑，七月立秋，八月白鹭
+        </view>
+        <view class="weui-article__p">
+          九月寒露，十月立冬，十一大雪，十二小寒
+        </view>
+      </view>
+      <view class="weui-article__section">
+        <view class="weui-article__h3">年上月干（年上取月）</view>
+        <view class="weui-article__p">
+          甲己之年丙作首，乙庚之岁戊为头
+        </view>
+        <view class="weui-article__p">
+          丙辛之岁寻庚上，丁壬壬字顺水流
+        </view>
+        <view class="weui-article__p">
+          若问戊癸何处起，甲字之上好寻求
+        </view>
+      </view>
+      <view class="weui-article__h2">日柱</view>
+      <view class="weui-article__section">
+        <view class="weui-article__h3">月上起日柱</view>
+        <view class="weui-article__p">
+          按流行赶月推算，查万年历
+        </view>
+      </view>
+      <view class="weui-article__h2">时柱</view>
+      <view class="weui-article__section">
+        <view class="weui-article__h3">日上起时干</view>
+        <view class="weui-article__p">
+          必须从子位上顺排到亥的位置
+        </view>
+        <view class="weui-article__p">
+          甲己还生甲，乙庚丙做初
+        </view>
+        <view class="weui-article__p">
+          丙辛从戊起，丁壬庚字居
+        </view>
+        <view class="weui-article__p">
+          戊癸何方发，壬字是真途
+        </view>
+      </view>
+    </view>
+  </view>
 </view>
