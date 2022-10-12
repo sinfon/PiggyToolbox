@@ -1,8 +1,8 @@
 <page-meta root-font-size="system"></page-meta>
 <view class="page" data-weui-theme="{{theme}}" data-weui-mode="{{mode}}">
-  <!-- <lunar-date-picker id="lunar-date-picker" bind:confirm="confirmDateSelected"></lunar-date-picker>
+  <lunar-date-picker id="lunar-date-picker" bind:confirm="confirmDateSelected"></lunar-date-picker>
 
-  <form bindsubmit="formSubmit">
+  <!-- <form bindsubmit="formSubmit">
     <view class="date_input">
       <input type="text" placeholder="请选择日期" value="{{dateStr}}" disabled="true" bindtap="showDatepicker" />
     </view>
@@ -15,6 +15,13 @@
   <view class="weui-article">
     <view aria-role="heading" aria-level="4" class="weui-article__h1">生辰八字</view>
     <view class="weui-article__section">
+      <view class="weui-article__h2">万年历</view>
+      <view class="weui-article__p">
+        万年历由十天干和十二地支组合而成，始于甲子，终于癸亥，六十年一个轮回，终而复始，永无止境。
+      </view>
+      <view class="weui-article__p">
+        例：甲子，乙丑，……，癸酉，甲戌，乙亥，丙子，……
+      </view>
       <view class="weui-article__h2">天干 & 地支</view>
       <view class="weui-article__p">
         十天干：甲、乙、丙、丁、戊、己、庚、辛、壬、癸

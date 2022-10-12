@@ -12,14 +12,17 @@ const maxLunar = solarLunar.solar2lunar(thisYear, 12, 31);
 const lunarMaxMonth = maxLunar.lMonth;
 const lunarMaxDay = maxLunar.lDay;
 
-// 默认初始配置数据
+/**
+ * 默认初始配置数据
+ */
 const dafaultConfig = {
-  confirm: true, //是否需要确认
-  date: '1991-1-6', //默认日期(新历)
-  hour: '0', //默认时辰
-  showHour: true, //是否有时辰选项
-  lunar: true, //默认展示农历
+  confirm: true, // 是否需要确认
+  date: '1991-06-30', // 默认日期(新历)
+  hour: '0', // 默认时辰
+  showHour: true, // 是否有时辰选项
+  lunar: true, // 默认展示农历
 }
+
 Component({
   // 组件的内部数据
   data: {
@@ -54,6 +57,32 @@ Component({
   },
   //组件的方法列表,内部方法_开头
   methods: {
+    /**
+     * 初始化插件数据并显示
+     */
+    init(param) {
+      // 合并对象,以默认配置为基础，返回新配置
+      let defaultSet = Object.assign({}, dafaultConfig, param);
+      // 检测数据合法性
+      defaultSet = this._checkConfig(defaultSet);
+      // 默认农历
+      if (defaultSet.lunar == true) {
+        //载入农历数据
+        this._initlunar(defaultSet.date, defaultSet.hour);
+      } else {
+        //载入公历数据
+        this._initsolar(defaultSet.date, defaultSet.hour);
+      }
+      // 设置配置，显示组件
+      this.setData({
+        lunarTab: defaultSet.lunar === true ? true : false,
+        config: defaultSet,
+        isShow: true
+      });
+      // 设置当前日期返回数据
+      this._setReturnDate();
+    },
+
     // 确认完成
     confirm() {
       // 判断是否需要确认
@@ -78,29 +107,7 @@ Component({
         this.triggerEvent('confirm', this.data.returnDate);
       }
     },
-    // 初始化插件数据并显示
-    init(param) {
-      // 合并对象,以默认配置为基础，返回新配置
-      let defaultSet = Object.assign({}, dafaultConfig, param);
-      // 检测数据合法性
-      defaultSet = this._checkConfig(defaultSet);
-      // 默认农历
-      if (defaultSet.lunar == true) {
-        //载入农历数据
-        this._initlunar(defaultSet.date, defaultSet.hour);
-      } else {
-        //载入公历数据
-        this._initsolar(defaultSet.date, defaultSet.hour);
-      }
-      // 设置配置，显示组件
-      this.setData({
-        lunarTab: defaultSet.lunar === true ? true : false,
-        config: defaultSet,
-        isShow: true
-      });
-      // 设置当前日期返回数据
-      this._setReturnDate();
-    },
+
     // 取消
     _cancel() {
       // 判断是否在确认步骤[返回修改&取消]
@@ -302,7 +309,7 @@ Component({
         thisDateJson.year = solarData.cYear;
         thisDateJson.month = solarData.cMonth;
         thisDateJson.day = solarData.cDay;
-        thisDateJson.solarStr = '公历:' + thisDateJson.year + '年' + thisDateJson.month + '月' + thisDateJson.day + '日';
+        thisDateJson.solarStr = thisDateJson.year + '年' + thisDateJson.month + '月' + thisDateJson.day + '日';
       } else {
         //公历下
         thisDateJson.lastTab = 'solar';
@@ -310,7 +317,7 @@ Component({
         thisDateJson.year = selectArr[0] + 1940;
         thisDateJson.month = selectArr[1] + 1;
         thisDateJson.day = selectArr[2] + 1;
-        thisDateJson.solarStr = '公历:' + thisDateJson.year + '年' + thisDateJson.month + '月' + thisDateJson.day + '日';
+        thisDateJson.solarStr = thisDateJson.year + '年' + thisDateJson.month + '月' + thisDateJson.day + '日';
         // 农历数据
         let lunarData = solarLunar.solar2lunar(thisDateJson.year, thisDateJson.month, thisDateJson.day);
         thisDateJson.lYear = lunarData.lYear;
@@ -318,9 +325,9 @@ Component({
         thisDateJson.lDay = lunarData.lDay;
         thisDateJson.isLeap = lunarData.isLeap;
         if (thisDateJson.isLeap == true) {
-          thisDateJson.lunarStr = '农历:' + thisDateJson.lYear + '年闰' + this._getLunarName('month', thisDateJson.lMonth) + '' + this._getLunarName('day', thisDateJson.lDay);
+          thisDateJson.lunarStr = thisDateJson.lYear + '年闰' + this._getLunarName('month', thisDateJson.lMonth) + '' + this._getLunarName('day', thisDateJson.lDay);
         } else {
-          thisDateJson.lunarStr = '农历:' + thisDateJson.lYear + '年' + this._getLunarName('month', thisDateJson.lMonth) + '' + this._getLunarName('day', thisDateJson.lDay);
+          thisDateJson.lunarStr = thisDateJson.lYear + '年' + this._getLunarName('month', thisDateJson.lMonth) + '' + this._getLunarName('day', thisDateJson.lDay);
         }
       }
       // 判断是否有选择时辰

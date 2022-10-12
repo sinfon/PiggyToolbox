@@ -10,26 +10,12 @@
   display: none;
 }
 
-/*日期选择框架*/
-.datepicker_wrap {
-  position: fixed;
-  width: 90%;
-  left: 5%;
-  top: 50%;
-  background-color: rgb(223, 223, 223);
-  box-shadow: 0 0 2px rgba(0, 0, 0, .4);
-  border-radius: 10rpx;
-  transform: translate3d(0, -300%, 0);
-  transition: transform .5s ease-out;
-  z-index: 31;
-}
-
 .datepicker_topinfo {
-  color: #363837;
+  color: black;
   font-size: 18px;
   text-align: center;
   padding: 20rpx 0;
-  border-bottom: 1px solid #4d5880;
+  border-bottom: 1px solid #07c160;
   font-weight: 700;
 }
 
@@ -48,8 +34,8 @@
   width: 30%;
   padding: 10rpx 0;
   text-align: center;
-  color: #c91723;
-  border: 1px solid #c91723;
+  color: #07c160;
+  border: 1px solid #07c160;
 }
 
 .datepicker_class view:first-child {
@@ -63,7 +49,7 @@
 }
 
 .datepicker_class .active {
-  background-color: #ff0011;
+  background-color: #07c160;
   color: rgb(255, 255, 255)
 }
 
@@ -78,34 +64,71 @@
   border-bottom: 1px solid #d4d4d4;
 }
 
-.datepicker_confirm {
+/*活动状态*/
+.datepicker_shade_active {
+  display: block;
+}
+
+.date-picker-confirm-area {
+  position: fixed;
+  width: 90%;
+  left: 5%;
+  top: 50%;
+  color: black;
+  background-color: rgb(223, 223, 223);
+  box-shadow: 0 0 2px rgba(0, 0, 0, .4);
+  border-radius: 10rpx;
+  z-index: 999;
+
+  /* 从初始位置基础上，向上移动 300% 的距离（-300%），起到隐藏元素的效果 ｜ translate3d 中的百分比单位是相对于自身元素的 */
+  transform: translate3d(0, -300%, 0);
+  /* 入、退场动画：实现前后设定位置之间的平移 */
+  transition: transform .3s ease-out;
+}
+
+[data-weui-theme=dark] .date-picker-confirm-area {
+  -webkit-filter: invert(100) hue-rotate(180deg);
+  filter: invert(100) hue-rotate(180deg)
+}
+
+.date-picker-confirm-area-active {
+  /* 从初始位置基础上，向上移动 60% 的距离（-60%），该配置会覆盖原属性中的 transform 起到显示元素的效果 */
+  transform: translate3d(0, -60%, 0);
+}
+
+.date-picker-confirm-area__content {
   padding: 30rpx 20rpx;
   font-size: 16px;
   text-align: center;
+  background-color: rgb(203, 203, 203);
 }
 
-.datepicker_confirm .tip {
-  color: #666;
-  margin-bottom: 20rpx;
+.date-picker-confirm-area__content__line {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 20px;
+  border-bottom: dotted 1px black;
 }
 
-.datepicker_confirm .p {
-  line-height: 24px;
+.date-picker-confirm-area__content__line-name {
+  text-align: right;
+  padding-right: 10px;
+  border-right: 1px dotted black;
 }
 
-.datepicker_confirm .p text {
-  color: #c91723
+.date-picker-confirm-area__content__line-content {
+  padding-left: 10px;
 }
 
-.datepicker_bottom {
+.date-picker-confirm-area__bottom {
   overflow: hidden;
   position: relative;
-  border-top: 1px solid #d4d4d4;
+  border-top: 1px solid #07c160;
   margin-top: 20rpx;
 }
 
-.datepicker_bottom view {
-  color: #000;
+.date-picker-confirm-area__bottom view {
   font-size: 16px;
   text-align: center;
   padding: 20rpx 0;
@@ -114,17 +137,8 @@
   box-sizing: border-box;
 }
 
-.datepicker_bottom view:last-child {
-  background-color: #d00b0b;
+.date-picker-confirm-area__bottom view:last-child {
+  background-color: #07c160;
   color: #fff;
   border-bottom-right-radius: 10rpx
-}
-
-/*活动状态*/
-.datepicker_shade_active {
-  display: block;
-}
-
-.datepicker_wrap_active {
-  transform: translate3d(0, -60%, 0);
 }

@@ -66,19 +66,15 @@ Page({
   },
 
   showDatepicker(event) {
-    wx.showModal({
-      content: '功能开发中，即将上线……',
-      cancelColor: '#000000',
-      confirmColor: '#576895',
-    })
-    // let date = this.data['date'];
-    // let hour = this.data['hour'];
-    // // 获取日期组件对象实例，并初始化配置
-    // this.selectComponent("#lunar-date-picker").init({
-    //   date: date,
-    //   hour: hour,
-    //   lunar: false
-    // });
+    const that = this
+    const date = that.data.date
+    const hour = that.data.hour
+    // 获取日期组件对象实例，并初始化配置
+    that.selectComponent("#lunar-date-picker").init({
+      date: date,
+      hour: hour,
+      lunar: false
+    });
   },
 
   confirmDateSelected(event) {
