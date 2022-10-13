@@ -285,7 +285,7 @@ Component({
       })
       const selectArr = this.data.selectArr;
       let thisDateJson = {};
-      thisDateJson.hour = this.data.config.showHour === false ? '' : selectArr[3] - 1;
+      thisDateJson.hour = this.data.config.showHour === false ? '' : selectArr[3];
       if (this.data.lunarTab === true) {
         //农历下
         thisDateJson.lastTab = 'lunar';
@@ -300,9 +300,9 @@ Component({
         thisDateJson.lDay = selectArr[2] + 1;
         thisDateJson.isLeap = (leapMonth > 0 && selectArr[1] == leapMonth) ? true : false;
         if (thisDateJson.isLeap == true) {
-          thisDateJson.lunarStr = '农历:' + thisDateJson.lYear + '年闰' + this._getLunarName('month', thisDateJson.lMonth) + '' + this._getLunarName('day', thisDateJson.lDay);
+          thisDateJson.lunarStr = thisDateJson.lYear + '年闰' + this._getLunarName('month', thisDateJson.lMonth) + '' + this._getLunarName('day', thisDateJson.lDay);
         } else {
-          thisDateJson.lunarStr = '农历:' + thisDateJson.lYear + '年' + this._getLunarName('month', thisDateJson.lMonth) + '' + this._getLunarName('day', thisDateJson.lDay);
+          thisDateJson.lunarStr = thisDateJson.lYear + '年' + this._getLunarName('month', thisDateJson.lMonth) + '' + this._getLunarName('day', thisDateJson.lDay);
         }
         // 农历数据
         let solarData = solarLunar.lunar2solar(thisDateJson.lYear, thisDateJson.lMonth, thisDateJson.lDay, thisDateJson.isLeap);

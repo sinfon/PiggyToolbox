@@ -13,6 +13,10 @@ page {
   filter: invert(100) hue-rotate(180deg)
 }
 
+.date-input-area input {
+  color: black;
+}
+
 .date-input-area .p {
   padding: 0 0 8px;
   font-size: 1.3em;

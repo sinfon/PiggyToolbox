@@ -1,6 +1,6 @@
 <view class="ldp-shade {{isShow ? 'datepicker_shade_active' : ''}}"></view>
 <view class="date-picker-confirm-area {{isShow ? 'date-picker-confirm-area-active' : ''}}" catchtouchmove="handleStop">
-  <view class="datepicker_topinfo">{{!hiddenConfirm ? '确认日期' : lunarTab?returnDate.lunarStr:returnDate.solarStr}}</view>
+  <view class="datepicker_topinfo">{{!hiddenConfirm ? '确认日期' : lunarTab ? returnDate.lunarStr : returnDate.solarStr}}</view>
   <view class="datepicker_select" hidden="{{!hiddenConfirm}}">
     <view class="datepicker_class">
       <view class="{{lunarTab?'':'active'}}" data-type="solar" bindtap="_solarLunarChange">公历</view>
@@ -23,19 +23,19 @@
   </view>
 
   <view class="date-picker-confirm-area__content" hidden="{{hiddenConfirm}}">
-      <view class="date-picker-confirm-area__content__line">请确认输入的时间是否正确：</view>
-      <view class="date-picker-confirm-area__content__line">
-        <text class="date-picker-confirm-area__content__line-name">公历</text>
-        <text class="date-picker-confirm-area__content__line-content">{{returnDate.solarStr}}</text>
-      </view>
-      <view class="date-picker-confirm-area__content__line">
-        <text class="date-picker-confirm-area__content__line-name">农历</text>
-        <text class="date-picker-confirm-area__content__line-content">{{returnDate.lunarStr}}</text>
-      </view>
+    <view class="date-picker-confirm-area__content__line">请确认输入的时间是否正确：</view>
+    <view class="date-picker-confirm-area__content__line">
+      <text class="date-picker-confirm-area__content__line-name">公历</text>
+      <text class="date-picker-confirm-area__content__line-content">{{returnDate.solarStr}}</text>
     </view>
+    <view class="date-picker-confirm-area__content__line">
+      <text class="date-picker-confirm-area__content__line-name">农历</text>
+      <text class="date-picker-confirm-area__content__line-content">{{returnDate.lunarStr}}</text>
+    </view>
+  </view>
 
-    <view class="date-picker-confirm-area__bottom">
-      <view bindtap="_cancel">{{hiddenConfirm ? '取消' : '返回修改'}}</view>
-      <view bindtap="confirm">{{hiddenConfirm ? '完成' : '确认'}}</view>
-    </view>
+  <view class="date-picker-confirm-area__bottom">
+    <view bindtap="_cancel">{{hiddenConfirm ? '取消' : '返回修改'}}</view>
+    <view bindtap="confirm">{{hiddenConfirm ? '完成' : '确认'}}</view>
+  </view>
 </view>
