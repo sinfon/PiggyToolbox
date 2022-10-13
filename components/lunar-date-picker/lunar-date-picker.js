@@ -398,8 +398,9 @@ Component({
         lunarData.lYear - 1940,
         (leapMonth > 0 && leapMonth <= lunarData.lMonth) ? lunarData.lMonth : lunarData.lMonth - 1,
         lunarData.lDay - 1,
-        parseInt(hour) + 1
+        parseInt(hour)
       ];
+
       this.setData({
         lunarTab: true,
         monthArr: monthArr,
@@ -431,7 +432,7 @@ Component({
       }
 
       // 设置位置
-      let selectArr = [dateArr[0] - 1940, dateArr[1] - 1, dateArr[2] - 1, parseInt(hour) + 1];
+      let selectArr = [dateArr[0] - 1940, dateArr[1] - 1, dateArr[2] - 1, parseInt(hour)];
       this.setData({
         lunarTab: false,
         monthArr: monthArr,
