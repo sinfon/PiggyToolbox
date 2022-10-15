@@ -3,27 +3,33 @@ page {
   font-size: 14px/1.2;
 }
 
-.date-input-area {
-  text-align: center;
-  padding-top: 10px;
+.birth-calculator {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-[data-weui-theme=dark] .date-input-area {
+[data-weui-theme=dark] .birth-calculator {
   -webkit-filter: invert(100) hue-rotate(180deg);
   filter: invert(100) hue-rotate(180deg)
 }
 
-.date-input-area input {
+.birth-calculator__date-input-area {
+  text-align: center;
+  padding-top: 30px;
+}
+
+.birth-calculator__date-input-area input {
   color: black;
 }
 
-.date-input-area .p {
+.birth-calculator__date-input-area .p {
   padding: 0 0 8px;
   font-size: 1.3em;
   color: #fc0
 }
 
-.date-input-area input {
+.birth-calculator__date-input-area input {
   height: 50px;
   font-size: 18px;
   border: 1px solid #444;
@@ -31,6 +37,13 @@ page {
   margin: 0 6%;
   box-sizing: border-box;
   background-color: #fff;
+}
+
+.birth-calculator__btn-area {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 50px;
 }
 
 /*submit*/

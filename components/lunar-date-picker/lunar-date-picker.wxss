@@ -84,7 +84,7 @@
   /* 从初始位置基础上，向上移动 300% 的距离（-300%），起到隐藏元素的效果 ｜ translate3d 中的百分比单位是相对于自身元素的 */
   transform: translate3d(0, -300%, 0);
   /* 入、退场动画：实现前后设定位置之间的平移 */
-  transition: transform .3s ease-out;
+  transition: transform .5s ease-out;
 }
 
 [data-weui-theme=dark] .date-picker-confirm-area {

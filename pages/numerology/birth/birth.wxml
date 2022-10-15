@@ -1,15 +1,14 @@
 <page-meta root-font-size="system"></page-meta>
 <view class="page" data-weui-theme="{{theme}}" data-weui-mode="{{mode}}">
   <lunar-date-picker id="lunar-date-picker" bind:confirm="confirmDateSelected"></lunar-date-picker>
-
-  <!-- <form bindsubmit="formSubmit">
-    <view class="date_input">
-      <input type="text" placeholder="请选择日期" value="{{dateStr}}" disabled="true" bindtap="showDatepicker" />
+  <view class="birth-calculator">
+    <view class="birth-calculator__date-input-area">
+      <input type="text" placeholder="请选择日期" value="{{dateStr}}" disabled="true" bindtap="showDatePicker" />
     </view>
-  </form> -->
-
-  <view class="date-input-area">
-    <input type="text" placeholder="请选择日期" value="{{dateStr}}" disabled="true" bindtap="showDatepicker" />
+    <view class="birth-calculator__btn-area">
+      <!-- 使用 style="width: 100%;" 调整样式，而尽量避免使用 !important 规则 -->
+      <button type="primary" size="default" style="width: 100%;" bindtap="calculateHoroscope">八字测算</button>
+    </view>
   </view>
 
   <view class="weui-article">

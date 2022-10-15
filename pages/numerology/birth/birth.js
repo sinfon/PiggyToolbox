@@ -65,7 +65,7 @@ Page({
 
   },
 
-  showDatepicker(event) {
+  showDatePicker(event) {
     const that = this
     const date = that.data.date
     const hour = that.data.hour
@@ -84,6 +84,18 @@ Page({
     json['dateStr'] = event.detail.thisStr;
     // 更新数据
     this.setData(json);
-    console.log(this.data)
+  },
+
+  calculateHoroscope(e) {
+    const that = this
+    const date = that.data.date
+    const hour = that.data.hour
+    if (date === undefined || date === '' || hour === undefined || hour === '') {
+      wx.showModal({
+        content: '请先选择日期',
+        showCancel: false,
+      })
+      return
+    }
   },
 })

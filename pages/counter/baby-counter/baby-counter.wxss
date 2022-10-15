@@ -163,6 +163,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  /* !important 规则用于增加样式的权重。使用一个 !important 规则时，此声明将覆盖任何其他声明。不仅仅包含 width 的声明 
+   * 使用 !important 是一个坏习惯，应该尽量避免，只有在需要覆盖全站或外部 CSS 的特定页面中使用 !important 
+   * 此处限制当前页面，所有 weui-btn 元素的宽度为 100%
+   */
   width: 100% !important;
 }
 

@@ -17,8 +17,8 @@ const lunarMaxDay = maxLunar.lDay;
  */
 const dafaultConfig = {
   confirm: true, // 是否需要确认
-  date: '1991-06-30', // 默认日期(新历)
-  hour: '0', // 默认时辰
+  date: '2022-09-23', // 默认日期（公历）
+  hour: '10', // 默认时辰
   showHour: true, // 是否有时辰选项
   lunar: true, // 默认展示农历
 }
@@ -29,7 +29,7 @@ Component({
     // 默认初始配置数据
     config: {},
     returnDate: {
-      lastTab: 'lunar', //最后确认tab,农历lunsr,公历solar
+      lastTab: 'lunar', //最后确认tab,农历lunar,公历solar
       year: '', //公历年
       month: '', //公历月
       day: '', //公历日
@@ -37,10 +37,10 @@ Component({
       lMonth: '', //农历月
       lDay: '', //农历日
       isLeap: '', //农历月是否为闰月
-      lunarStr: '', //农历: 1991年十一月廿六 0子时
-      solarStr: '', //公历: 1991年12月31日 0时
-      thisStr: '', //当前在什么下返回
-      hour: '', //时辰,为空表示不需要时辰，-1为未知时辰
+      lunarStr: '', // 农历时间字符串
+      solarStr: '', // 公历时间字符串
+      thisStr: '',  // 当前在什么下返回
+      hour: '', // 时辰，为空表示不需要时辰，-1为未知时辰
     },
     // 选择块数据
     selectArr: [],
@@ -93,6 +93,7 @@ Component({
             isShow: false,
             hiddenConfirm: true
           });
+          // 触发事件，供组件使用方处理
           this.triggerEvent('confirm', this.data.returnDate);
         } else {
           this.setData({
@@ -104,6 +105,7 @@ Component({
           isShow: false,
           hiddenConfirm: true
         });
+        // 触发事件，供组件使用方处理
         this.triggerEvent('confirm', this.data.returnDate);
       }
     },
@@ -300,9 +302,9 @@ Component({
         thisDateJson.lDay = selectArr[2] + 1;
         thisDateJson.isLeap = (leapMonth > 0 && selectArr[1] == leapMonth) ? true : false;
         if (thisDateJson.isLeap == true) {
-          thisDateJson.lunarStr = thisDateJson.lYear + '年闰' + this._getLunarName('month', thisDateJson.lMonth) + '' + this._getLunarName('day', thisDateJson.lDay);
+          thisDateJson.lunarStr = thisDateJson.lYear + '年 闰' + this._getLunarName('month', thisDateJson.lMonth) + '' + this._getLunarName('day', thisDateJson.lDay);
         } else {
-          thisDateJson.lunarStr = thisDateJson.lYear + '年' + this._getLunarName('month', thisDateJson.lMonth) + '' + this._getLunarName('day', thisDateJson.lDay);
+          thisDateJson.lunarStr = thisDateJson.lYear + '年 ' + this._getLunarName('month', thisDateJson.lMonth) + '' + this._getLunarName('day', thisDateJson.lDay);
         }
         // 农历数据
         let solarData = solarLunar.lunar2solar(thisDateJson.lYear, thisDateJson.lMonth, thisDateJson.lDay, thisDateJson.isLeap);
@@ -428,7 +430,7 @@ Component({
       // 时辰数组
       let hourArr = [];
       for (let i = 0; i <= 23; i++) {
-        hourArr.push(i + '时');
+        hourArr.push(i);
       }
 
       // 设置位置

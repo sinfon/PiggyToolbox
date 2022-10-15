@@ -17,7 +17,7 @@
         <view wx:for="{{dayArr}}" wx:key="this" style="line-height: 40px;">{{item}}</view>
       </picker-view-column>
       <picker-view-column wx:if="{{config.showHour}}">
-        <view wx:for="{{hourArr}}" wx:key="this" style="line-height: 40px;">{{item}}</view>
+        <view wx:for="{{hourArr}}" wx:key="this" style="line-height: 40px; border-left: 1px dotted black;">{{item}}</view>
       </picker-view-column>
     </picker-view>
   </view>
