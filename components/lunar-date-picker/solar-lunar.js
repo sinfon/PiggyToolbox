@@ -147,23 +147,23 @@
         getAnimal: function (b) {
           return S.animals[(b - 4) % 12]
         },
-        solar2lunar: function (b, f, e) {
-          if (b < 1900 || b > 2100) return -1;
-          if (1900 == b && 1 == f && e < 31) return -1;
-          if (b) var c = new Date(b, parseInt(f) - 1, e);
-          else var c = new Date;
+        solar2lunar: function (year, month, day) {
+          if (year < 1900 || year > 2100) return -1;
+          if (1900 == year && 1 == month && day < 31) return -1;
+          if (year) var date = new Date(year, parseInt(month) - 1, day);
+          else var date = new Date;
           var t, r = 0,
             a = 0,
-            b = c.getFullYear(),
-            f = c.getMonth() + 1,
-            e = c.getDate(),
-            n = (Date.UTC(c.getFullYear(), c.getMonth(), c.getDate()) - Date.UTC(1900, 0, 31)) / 864e5;
+            year = date.getFullYear(),
+            month = date.getMonth() + 1,
+            day = date.getDate(),
+            n = (Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) - Date.UTC(1900, 0, 31)) / 864e5;
           for (t = 1900; t < 2101 && n > 0; t++) a = S.lYearDays(t), n -= a;
           n < 0 && (n += a, t--);
           var d = new Date,
             u = !1;
-          d.getFullYear() == b && d.getMonth() + 1 == f && d.getDate() == e && (u = !0);
-          var s = c.getDay(),
+          d.getFullYear() == year && d.getMonth() + 1 == month && d.getDate() == day && (u = !0);
+          var s = date.getDay(),
             o = S.nStr1[s];
           0 == s && (s = 7);
           var l = t,
@@ -173,19 +173,19 @@
           0 == n && r > 0 && t == r + 1 && (i ? i = !1 : (i = !0, --t)), n < 0 && (n += a, --t);
           var p = t,
             y = n + 1,
-            h = f - 1,
+            h = month - 1,
             v = S.getTerm(l, 3),
             M = S.toGanZhi(l - 4);
-          M = h < 2 && e < v ? S.toGanZhi(l - 5) : S.toGanZhi(l - 4);
-          var g = S.getTerm(b, 2 * f - 1),
-            _ = S.getTerm(b, 2 * f),
-            D = S.toGanZhi(12 * (b - 1900) + f + 11);
-          e >= g && (D = S.toGanZhi(12 * (b - 1900) + f + 12));
+          M = h < 2 && day < v ? S.toGanZhi(l - 5) : S.toGanZhi(l - 4);
+          var g = S.getTerm(year, 2 * month - 1),
+            _ = S.getTerm(year, 2 * month),
+            D = S.toGanZhi(12 * (year - 1900) + month + 11);
+          day >= g && (D = S.toGanZhi(12 * (year - 1900) + month + 12));
           var x = !1,
             m = "";
-          g == e && (x = !0, m = S.lunarTerm[2 * f - 2]), _ == e && (x = !0, m = S.lunarTerm[2 * f - 1]);
-          var j = Date.UTC(b, h, 1, 0, 0, 0, 0) / 864e5 + 25567 + 10,
-            I = S.toGanZhi(j + e - 1);
+          g == day && (x = !0, m = S.lunarTerm[2 * month - 2]), _ == day && (x = !0, m = S.lunarTerm[2 * month - 1]);
+          var j = Date.UTC(year, h, 1, 0, 0, 0, 0) / 864e5 + 25567 + 10,
+            I = S.toGanZhi(j + day - 1);
           return {
             lYear: l,
             lMonth: p,
@@ -194,9 +194,9 @@
             yearCn: S.toChinaYear(l),
             monthCn: (i ? "闰" : "") + S.toChinaMonth(p),
             dayCn: S.toChinaDay(y),
-            cYear: b,
-            cMonth: f,
-            cDay: e,
+            cYear: year,
+            cMonth: month,
+            cDay: day,
             gzYear: M,
             gzMonth: D,
             gzDay: I,

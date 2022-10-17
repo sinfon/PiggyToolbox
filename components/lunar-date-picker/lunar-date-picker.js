@@ -39,7 +39,7 @@ Component({
       isLeap: '', //农历月是否为闰月
       lunarStr: '', // 农历时间字符串
       solarStr: '', // 公历时间字符串
-      thisStr: '',  // 当前在什么下返回
+      thisStr: '', // 当前在什么下返回
       hour: '', // 时辰，为空表示不需要时辰，-1为未知时辰
     },
     // 选择块数据
@@ -153,14 +153,15 @@ Component({
       const type = event.currentTarget.dataset.type;
       const thisDate = this.data.returnDate;
 
-      // 农历下点击公历切换
+      // 公历切换为农历
       if (this.data.lunarTab !== true && type == 'lunar') {
         this.setData({
           lunarTab: true
         })
         this._initlunar(thisDate.year + '-' + thisDate.month + '-' + thisDate.day, thisDate.hour);
       }
-      // 公历下点击农历切换
+
+      // 农历切换为公历
       if (this.data.lunarTab === true && type == 'solar') {
         this.setData({
           lunarTab: false
@@ -173,8 +174,8 @@ Component({
     _pickerChange(event) {
       let selectArr = event.detail.value;
       if (this.data.lunarTab === true) {
-        //在农历下
-        // 该年是否有闰月，0没有
+        // 在农历下
+        // 该年是否有闰月，0 没有
         const leapMonth = solarLunar.leapMonth(selectArr[0] + 1940);
         const oldMonthArr = this.data.monthArr;
         // 刷新月份数组
@@ -289,49 +290,29 @@ Component({
       let thisDateJson = {};
       thisDateJson.hour = this.data.config.showHour === false ? '' : selectArr[3];
       if (this.data.lunarTab === true) {
-        //农历下
+        // 农历下
         thisDateJson.lastTab = 'lunar';
-        // 公历数据
-        thisDateJson.lYear = selectArr[0] + 1940;
-        const leapMonth = solarLunar.leapMonth(selectArr[0] + 1940);
-        if (leapMonth > 0) {
-          thisDateJson.lMonth = selectArr[1] >= leapMonth ? selectArr[1] : selectArr[1] + 1;
-        } else {
-          thisDateJson.lMonth = selectArr[1] + 1;
-        }
-        thisDateJson.lDay = selectArr[2] + 1;
-        thisDateJson.isLeap = (leapMonth > 0 && selectArr[1] == leapMonth) ? true : false;
-        if (thisDateJson.isLeap == true) {
-          thisDateJson.lunarStr = thisDateJson.lYear + '年 闰' + this._getLunarName('month', thisDateJson.lMonth) + '' + this._getLunarName('day', thisDateJson.lDay);
-        } else {
-          thisDateJson.lunarStr = thisDateJson.lYear + '年 ' + this._getLunarName('month', thisDateJson.lMonth) + '' + this._getLunarName('day', thisDateJson.lDay);
-        }
-        // 农历数据
-        let solarData = solarLunar.lunar2solar(thisDateJson.lYear, thisDateJson.lMonth, thisDateJson.lDay, thisDateJson.isLeap);
-        thisDateJson.year = solarData.cYear;
-        thisDateJson.month = solarData.cMonth;
-        thisDateJson.day = solarData.cDay;
-        thisDateJson.solarStr = thisDateJson.year + '年' + thisDateJson.month + '月' + thisDateJson.day + '日';
+  
+        // 农历日期转换为当日日期信息
+        const lYear = selectArr[0] + 1940
+        const leapMonth = solarLunar.leapMonth(lYear)
+        const lMonth = leapMonth > 0 ? (selectArr[1] >= leapMonth ? selectArr[1] : selectArr[1] + 1) : (selectArr[1] + 1)
+        const lDay = selectArr[2] + 1
+        const isLeap = (leapMonth > 0 && selectArr[1] == leapMonth) ? true : false;
+        const dateInfo = solarLunar.lunar2solar(lYear, lMonth, lDay, isLeap)
+        this._padDateJson(thisDateJson, dateInfo)
       } else {
-        //公历下
+        // 公历
         thisDateJson.lastTab = 'solar';
-        // 公历数据
-        thisDateJson.year = selectArr[0] + 1940;
-        thisDateJson.month = selectArr[1] + 1;
-        thisDateJson.day = selectArr[2] + 1;
-        thisDateJson.solarStr = thisDateJson.year + '年' + thisDateJson.month + '月' + thisDateJson.day + '日';
-        // 农历数据
-        let lunarData = solarLunar.solar2lunar(thisDateJson.year, thisDateJson.month, thisDateJson.day);
-        thisDateJson.lYear = lunarData.lYear;
-        thisDateJson.lMonth = lunarData.lMonth;
-        thisDateJson.lDay = lunarData.lDay;
-        thisDateJson.isLeap = lunarData.isLeap;
-        if (thisDateJson.isLeap == true) {
-          thisDateJson.lunarStr = thisDateJson.lYear + '年闰' + this._getLunarName('month', thisDateJson.lMonth) + '' + this._getLunarName('day', thisDateJson.lDay);
-        } else {
-          thisDateJson.lunarStr = thisDateJson.lYear + '年' + this._getLunarName('month', thisDateJson.lMonth) + '' + this._getLunarName('day', thisDateJson.lDay);
-        }
+
+        // 公历日期转换为当日日期信息
+        const year = selectArr[0] + 1940
+        const month = selectArr[1] + 1
+        const day = selectArr[2] + 1
+        const dateInfo = solarLunar.solar2lunar(year, month, day)
+        this._padDateJson(thisDateJson, dateInfo)
       }
+
       // 判断是否有选择时辰
       if (thisDateJson.hour !== '') {
         thisDateJson.solarStr += ' ' + (thisDateJson.hour < 0 ? '时辰未知' : (thisDateJson.hour + '时'));
@@ -347,6 +328,20 @@ Component({
         returnDate: thisDateJson
       })
     },
+    _padDateJson(dateJson, dateInfo) {
+      // 填充公历日期信息
+      dateJson.solarStr = dateInfo.cYear + '年' + dateInfo.cMonth + '月' + dateInfo.cDay + '日';
+      dateJson.year = dateInfo.cYear;
+      dateJson.month = dateInfo.cMonth;
+      dateJson.day = dateInfo.cDay;
+
+      // 填充农历日期信息
+      dateJson.lunarStr = dateInfo.yearCn + dateInfo.monthCn + dateInfo.dayCn
+      dateJson.lYear = dateInfo.lYear;
+      dateJson.lMonth = dateInfo.lMonth;
+      dateJson.lDay = dateInfo.lDay;
+      dateJson.isLeap = dateInfo.isLeap;
+    },
     // 返回中文农历名
     _getLunarName(type, number) {
       const monthArr = ['正月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '腊月'];
@@ -358,6 +353,7 @@ Component({
       ];
       if (type === 'month') return monthArr[number - 1];
       if (type === 'day') return dayArr[number - 1];
+      // 时辰从零点开始的，所以不需要减一
       if (type === 'hour') return hourArr[number];
     },
     // 填充农历数据
@@ -379,11 +375,11 @@ Component({
       // 日期数组
       let dayArr = [];
       let maxDay;
-      // 该日期是否是闰月
+      // 该日期是否是闰月 | 注意此处传值应是农历年份及月份
       if (lunarData.isLeap) {
-        maxDay = solarLunar.leapDays(dateArr[0], dateArr[1])
+        maxDay = solarLunar.leapDays(lunarData.lYear, lunarData.lMonth)
       } else {
-        maxDay = solarLunar.monthDays(dateArr[0], dateArr[1])
+        maxDay = solarLunar.monthDays(lunarData.lYear, lunarData.lMonth)
       }
       for (let i = 1; i <= maxDay; i++) {
         dayArr.push(this._getLunarName('day', i));
@@ -398,7 +394,7 @@ Component({
       // 设置位置
       let selectArr = [
         lunarData.lYear - 1940,
-        (leapMonth > 0 && leapMonth <= lunarData.lMonth) ? lunarData.lMonth : lunarData.lMonth - 1,
+        this._getLunarMonthSelected(leapMonth, lunarData),
         lunarData.lDay - 1,
         parseInt(hour)
       ];
@@ -410,6 +406,24 @@ Component({
         hourArr: hourArr,
         selectArr: selectArr
       })
+    },
+    _getLunarMonthSelected(leapMonth, dateInfo) {
+      if (leapMonth <= 0) {
+        // 不存在闰月，则下标必然是月份数减一
+        return dateInfo.lMonth - 1
+      }
+
+      // 存在闰月
+      if (leapMonth < dateInfo.lMonth) {
+        // 存在闰月，且当前日期对应月份大于闰月，则选中元素下标与月份数相同
+        return dateInfo.lMonth
+      } else if (leapMonth > dateInfo.lMonth) {
+        // 月份数小于闰月，则相当于无闰月时的下标
+        return dateInfo.lMonth - 1
+      } else {
+        // 是闰月的月份数，判断是否闰月本月
+        return dateInfo.isLeap ? dateInfo.lMonth : dateInfo.lMonth - 1
+      }
     },
     // 填充公历数据
     _initsolar(date, hour) {

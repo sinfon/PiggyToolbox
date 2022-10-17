@@ -9,6 +9,42 @@
       <!-- 使用 style="width: 100%;" 调整样式，而尽量避免使用 !important 规则 -->
       <button type="primary" size="default" style="width: 100%;" bindtap="calculateHoroscope">八字测算</button>
     </view>
+    <view class="birth-calculator__result" wx:if="{{showResult}}">
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell__default" aria-role="option">
+          <view class="weui-cell__bd">公历</view>
+          <view class="weui-cell__ft">{{result.cYear + '-' + result.cMonth + '-' + result.cDay}}</view>
+        </view>
+        <view class="weui-cell weui-cell__default" aria-role="option">
+          <view class="weui-cell__bd">农历</view>
+          <view class="weui-cell__ft">{{result.yearCn + result.monthCn + result.dayCn}}</view>
+        </view>
+        <view class="weui-cell weui-cell__highlight" aria-role="option">
+          <view class="weui-cell__bd">年柱</view>
+          <view class="weui-cell__ft">{{result.gzYear}}</view>
+        </view>
+        <view class="weui-cell weui-cell__highlight" aria-role="option">
+          <view class="weui-cell__bd">月柱</view>
+          <view class="weui-cell__ft">{{result.gzMonth}}</view>
+        </view>
+        <view class="weui-cell weui-cell__highlight" aria-role="option">
+          <view class="weui-cell__bd">日柱</view>
+          <view class="weui-cell__ft">{{result.gzDay}}</view>
+        </view>
+        <view class="weui-cell weui-cell__highlight" aria-role="option">
+          <view class="weui-cell__bd">时柱</view>
+          <view class="weui-cell__ft">{{result.gzYear}}</view>
+        </view>
+        <view class="weui-cell weui-cell__default" aria-role="option">
+          <view class="weui-cell__bd">生肖</view>
+          <view class="weui-cell__ft">{{result.animal}}</view>
+        </view>
+        <view wx:if="{{result.isTerm}}" class="weui-cell weui-cell__default" aria-role="option">
+          <view class="weui-cell__bd">节气</view>
+          <view class="weui-cell__ft">{{result.term}}</view>
+        </view>
+      </view>
+    </view>
   </view>
 
   <view class="weui-article">

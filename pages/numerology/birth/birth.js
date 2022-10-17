@@ -1,3 +1,5 @@
+import solarLunar from '../../../components/lunar-date-picker/solar-lunar';
+
 Page({
   mixins: [require('../../../mixin/common')],
   /**
@@ -7,6 +9,8 @@ Page({
     dateStr: '',
     date: '',
     hour: '',
+    showResult: false,
+    result: {},
   },
 
   /**
@@ -67,6 +71,10 @@ Page({
 
   showDatePicker(event) {
     const that = this
+    that.setData({
+      showResult: false
+    })
+
     const date = that.data.date
     const hour = that.data.hour
     // 获取日期组件对象实例，并初始化配置
@@ -82,6 +90,7 @@ Page({
     json['date'] = event.detail.year + '-' + event.detail.month + '-' + event.detail.day;
     json['hour'] = event.detail.hour;
     json['dateStr'] = event.detail.thisStr;
+    json['dateInfo'] = event.detail.dateInfo
     // 更新数据
     this.setData(json);
   },
@@ -97,5 +106,11 @@ Page({
       })
       return
     }
+
+    const dateInfo = that.data.dateInfo
+    that.setData({
+      showResult: true,
+      result: dateInfo,
+    })
   },
 })

@@ -46,6 +46,27 @@ page {
   padding: 10px 50px;
 }
 
+.birth-calculator__result {
+  margin: 10px;
+}
+
+[data-weui-theme=dark] .birth-calculator__result {
+  -webkit-filter: invert(100) hue-rotate(180deg);
+  filter: invert(100) hue-rotate(180deg)
+}
+
+.weui-cell__default {
+  border-left: 10px solid #666666;
+}
+
+[data-weui-theme=dark] .weui-cell__default {
+  border-left: 10px solid #dddddd;
+}
+
+.weui-cell__highlight {
+  border-left: 10px solid #07c160;
+}
+
 /*submit*/
 .fe_duzhe {
   margin-top: 80rpx;

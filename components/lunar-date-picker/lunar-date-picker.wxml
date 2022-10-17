@@ -3,8 +3,8 @@
   <view class="datepicker_topinfo">{{!hiddenConfirm ? '确认日期' : lunarTab ? returnDate.lunarStr : returnDate.solarStr}}</view>
   <view class="datepicker_select" hidden="{{!hiddenConfirm}}">
     <view class="datepicker_class">
-      <view class="{{lunarTab?'':'active'}}" data-type="solar" bindtap="_solarLunarChange">公历</view>
-      <view class="{{lunarTab?'active':''}}" data-type="lunar" bindtap="_solarLunarChange">农历</view>
+      <view class="{{lunarTab ? '' : 'active'}}" data-type="solar" bindtap="_solarLunarChange">公历</view>
+      <view class="{{lunarTab ? 'active' : ''}}" data-type="lunar" bindtap="_solarLunarChange">农历</view>
     </view>
     <picker-view indicator-style="height:40px" indicator-class="column_class" class="select_wrap" value="{{selectArr}}" bindchange="_pickerChange">
       <picker-view-column>
