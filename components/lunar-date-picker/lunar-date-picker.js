@@ -1,4 +1,8 @@
 import solarLunar from './solar-lunar';
+
+const TIAN_GAN_LIST = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"]
+const DI_ZHI_LIST = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"]
+
 // 设置年份数组1940-明年
 const thisYear = new Date().getFullYear() + 1;
 const dafaultYearArr = [];
@@ -292,7 +296,7 @@ Component({
       if (this.data.lunarTab === true) {
         // 农历下
         thisDateJson.lastTab = 'lunar';
-  
+
         // 农历日期转换为当日日期信息
         const lYear = selectArr[0] + 1940
         const leapMonth = solarLunar.leapMonth(lYear)
@@ -317,6 +321,12 @@ Component({
       if (thisDateJson.hour !== '') {
         thisDateJson.solarStr += ' ' + (thisDateJson.hour < 0 ? '时辰未知' : (thisDateJson.hour + '时'));
         thisDateJson.lunarStr += ' ' + (thisDateJson.hour < 0 ? '时辰未知' : (this._getLunarName('hour', thisDateJson.hour) + '时'));
+        // 时柱计算，获取对应的时辰的地支
+        const dzHour = this._getDzHour(thisDateJson.hour)
+        // 获取当前日期对应的天干
+        const tgDay = thisDateJson.dateInfo.gzDay[0]
+        const tgHour = this._getTgHour(tgDay, dzHour)
+        thisDateJson.dateInfo['gzHour'] = tgHour + dzHour
       }
       //判断当前模式返回thisStr
       if (this.data.lunarTab === true) {
@@ -358,6 +368,53 @@ Component({
       if (type === 'day') return dayArr[number - 1];
       // 时辰从零点开始的，所以不需要减一
       if (type === 'hour') return hourArr[number];
+    },
+
+    /**
+     * 返回给定小时对应的农历时辰名
+     */
+    _getDzHour(hour) {
+      const hourArr = [
+        '子', '丑', '丑', '寅', '寅', '卯', '卯', '辰',
+        '辰', '巳', '巳', '午', '午', '未', '未', '申',
+        '申', '酉', '酉', '戌', '戌', '亥', '亥', '子'
+      ]
+      return hourArr[hour]
+    },
+    _getTgHour(tianGanOfDay, diZhiOfHour) {
+      const tianGanOfZiShi = this._getTianGanOfZiShi(tianGanOfDay)
+      if (tianGanOfZiShi === undefined) {
+        return undefined
+      }
+
+      // 找到子时天干在数组中的 index
+      const index4TianGanOfZiShi = TIAN_GAN_LIST.indexOf(tianGanOfZiShi)
+      // 找到对应时辰在地支中的 index，用于最终确定这个时辰的天干
+      const index4DiZhiOfHour = DI_ZHI_LIST.indexOf(diZhiOfHour)
+      console.log(index4TianGanOfZiShi, index4DiZhiOfHour)
+      return TIAN_GAN_LIST[(index4TianGanOfZiShi + index4DiZhiOfHour) % 10]
+    },
+    /**
+     * 根据当日天干，获取该日子时对应的天干
+     * 
+     * 甲己还加甲，乙庚丙作初
+     * 丙辛从戊起，丁壬庚字居
+     * 戊癸何方发，壬字是真途
+     */
+    _getTianGanOfZiShi(tianGanOfDay) {
+      if (tianGanOfDay === '甲' || tianGanOfDay === '己') {
+        return '甲'
+      } else if (tianGanOfDay === '乙' || tianGanOfDay === '庚') {
+        return '丙'
+      } else if (tianGanOfDay === '丙' || tianGanOfDay === '辛') {
+        return '戊'
+      } else if (tianGanOfDay === '丁' || tianGanOfDay === '壬') {
+        return '庚'
+      } else if (tianGanOfDay === '戊' || tianGanOfDay === '癸') {
+        return '壬'
+      }
+
+      return undefined
     },
     // 填充农历数据
     _initlunar(date, hour) {

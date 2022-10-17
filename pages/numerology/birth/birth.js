@@ -90,7 +90,7 @@ Page({
     json['date'] = event.detail.year + '-' + event.detail.month + '-' + event.detail.day;
     json['hour'] = event.detail.hour;
     json['dateStr'] = event.detail.thisStr;
-    json['dateInfo'] = event.detail.dateInfo
+    json['result'] = event.detail.dateInfo
     // 更新数据
     this.setData(json);
   },
@@ -107,10 +107,8 @@ Page({
       return
     }
 
-    const dateInfo = that.data.dateInfo
     that.setData({
       showResult: true,
-      result: dateInfo,
     })
   },
 })

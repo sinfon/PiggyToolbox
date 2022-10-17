@@ -33,7 +33,7 @@
         </view>
         <view class="weui-cell weui-cell__highlight" aria-role="option">
           <view class="weui-cell__bd">时柱</view>
-          <view class="weui-cell__ft">{{result.gzYear}}</view>
+          <view class="weui-cell__ft">{{result.gzHour}}</view>
         </view>
         <view class="weui-cell weui-cell__default" aria-role="option">
           <view class="weui-cell__bd">生肖</view>
