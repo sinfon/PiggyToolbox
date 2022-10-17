@@ -120,6 +120,9 @@
 
 .date-picker-confirm-area__content__line-content {
   padding-left: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #013b1c;
 }
 
 .date-picker-confirm-area__bottom {
