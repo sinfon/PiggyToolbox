@@ -329,6 +329,9 @@ Component({
       })
     },
     _padDateJson(dateJson, dateInfo) {
+      // 当前日期信息也要传递出去
+      dateJson.dateInfo = dateInfo
+
       // 填充公历日期信息
       dateJson.solarStr = dateInfo.cYear + '年' + dateInfo.cMonth + '月' + dateInfo.cDay + '日';
       dateJson.year = dateInfo.cYear;
