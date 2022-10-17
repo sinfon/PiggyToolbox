@@ -44,4 +44,5 @@
 - [微信小程序公农历日期选择器组件(rui-datepicker-wxapp)](https://github.com/chenruifu/rui-datepicker-wxapp)
 - [生辰八字是什么？科普扫盲向](https://zhuanlan.zhihu.com/p/471294437)
 - [易学方法｜日上起时法](https://zhuanlan.zhihu.com/p/26102368)
+- [八字算命](https://www.buyiju.com/bazi/#csshow)
 - [picker不能阻止冒泡，求解答](https://developers.weixin.qq.com/community/develop/doc/000a429d7243d84c1057ab81350800)
