@@ -1,5 +1,7 @@
 # 小猪手（Piggy Toolbox）
 
+> 微信搜索小程序【小猪手】，发现一些可能用到的小工具
+
 扫码体验
 
 ![小程序码](./images/share/mp-qr-code.jpg)
