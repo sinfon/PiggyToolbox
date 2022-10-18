@@ -37,6 +37,7 @@
                 <view class="weui-cell">
                   <view class="baby-daily-records-detail">{{index + 1}}</view>
                   <view class="weui-cell__bd">
+                    <view class="baby-daily-records-detail__create-time">添加于：{{detail.createTimeStr}}</view>
                     <view class="baby-daily-records-detail__time">{{detail.timeStr}}</view>
                     <view wx:if="{{detail.note !== undefined && detail.note !== '' && detail.note !== null}}" class="baby-daily-records-detail__note">
                       <image aria-role="button" class="baby-daily-records-detail__note-img" src="/images/icon_nav_layout.png"></image>

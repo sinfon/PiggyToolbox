@@ -57,7 +57,6 @@ Page({
   },
 
   onDateTimeColumnChange(e) {
-    console.log(e.detail)
     var arr = this.data.dateTime,
       dateArr = this.data.dateTimeArray;
     // Picker 的第 e.detail.column 列发生了变更，变更为了对应列的第 e.detail.value 个元素
@@ -71,17 +70,30 @@ Page({
   },
 
   refreshRecords(dateStr, date) {
-    const records = this.getBabyDailyRecords(dateStr)
-    this.setData({
+    const that = this
+    const records = that.getBabyDailyRecords(dateStr)
+    that.wrapRecords(records)
+    that.setData({
       dateStr: dateStr,
       records: records
     })
 
     if (date != null && date != undefined) {
-      this.setData({
+      that.setData({
         date: date
       })
     }
+  },
+
+  wrapRecords(records) {
+    records.forEach(record => {
+      const details = record.details
+      details.forEach(detail => {
+        const createTimeId = detail.createTimeId === undefined ? detail.timeId : detail.createTimeId
+        detail.createTimeStr = util.formatTime(new Date(createTimeId))
+        detail.timeStr = util.formatTime(new Date(detail.timeId))
+      })
+    })
   },
 
   getBabyDailyRecords(dateStr) {
@@ -298,7 +310,6 @@ Page({
     const selectedMinute = this.data.dateTimeArray[4][selectedDateTime[4]]
     const selectedSecond = this.data.dateTimeArray[5][selectedDateTime[5]]
     const date = new Date(selectedYear, selectedMonth - 1, selectedDate, selectedHour, selectedMinute, selectedSecond)
-    console.log(e)
     const itemEnumName = e.currentTarget.dataset.itemEnumName
     this.plus(date, itemEnumName)
   },
@@ -311,12 +322,19 @@ Page({
       record = this.createDefaultBabyDailyRecord(itemEnum)
     }
 
+    const createTime = new Date()
     let detail = {
       timeId: date.getTime(),
-      timeStr: util.formatTime(date),
+      createTimeId: createTime.getTime(),
       confirmBtnHidden: true,
     }
     record.details.push(detail)
+
+    // 重新按照记录实际发生时间排序
+    record.details.sort((a, b) => {
+      // 时间戳更大的，排在数组的后面
+      return a.timeId - b.timeId
+    })
 
     this.setBabyDailyRecord(dateStr, itemEnum, record)
     this.refreshRecords(dateStr, date)

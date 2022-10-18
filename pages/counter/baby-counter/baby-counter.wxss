@@ -98,7 +98,22 @@
 }
 
 .baby-daily-records-detail__time {
+  color: #000000;
+}
+
+[data-weui-theme=dark] .baby-daily-records-detail__time {
+  -webkit-filter: invert(100) hue-rotate(180deg);
+  filter: invert(100) hue-rotate(180deg)
+}
+
+.baby-daily-records-detail__create-time {
   color: darkgrey;
+  font-size: 10px;
+}
+
+[data-weui-theme=dark] .baby-daily-records-detail__create-time {
+  -webkit-filter: invert(100) hue-rotate(180deg);
+  filter: invert(100) hue-rotate(180deg)
 }
 
 .baby-daily-records-detail__note {
