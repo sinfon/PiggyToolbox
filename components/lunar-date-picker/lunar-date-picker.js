@@ -2,6 +2,32 @@ import solarLunar from './solar-lunar';
 
 const TIAN_GAN_LIST = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"]
 const DI_ZHI_LIST = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"]
+const TIAN_GAN_WU_XING_MAP = {
+  "甲": "木",
+  "乙": "木",
+  "丙": "火",
+  "丁": "火",
+  "戊": "土",
+  "己": "土",
+  "庚": "金",
+  "辛": "金",
+  "壬": "水",
+  "癸": "水"
+}
+const DI_ZHI_WU_XING_MAP = {
+  "子": "水",
+  "丑": "土",
+  "寅": "木",
+  "卯": "木",
+  "辰": "土",
+  "巳": "火",
+  "午": "火",
+  "未": "土",
+  "申": "金",
+  "酉": "金",
+  "戌": "土",
+  "亥": "水"
+}
 
 // 设置年份数组1940-明年
 const thisYear = new Date().getFullYear() + 1;
@@ -321,13 +347,79 @@ Component({
       if (thisDateJson.hour !== '') {
         thisDateJson.solarStr += ' ' + (thisDateJson.hour < 0 ? '时辰未知' : (thisDateJson.hour + '时'));
         thisDateJson.lunarStr += ' ' + (thisDateJson.hour < 0 ? '时辰未知' : (this._getLunarName('hour', thisDateJson.hour) + '时'));
+
+        const hour = thisDateJson.hour
+        thisDateJson.dateInfo['cHour'] = hour
+
         // 时柱计算，获取对应的时辰的地支
-        const dzHour = this._getDzHour(thisDateJson.hour)
+        const dzHour = this._getDzHour(hour)
+        thisDateJson.dateInfo['hourCn'] = '[' + hour + ']' + dzHour + '时'
+
         // 获取当前日期对应的天干
         const tgDay = thisDateJson.dateInfo.gzDay[0]
         const tgHour = this._getTgHour(tgDay, dzHour)
         thisDateJson.dateInfo['gzHour'] = tgHour + dzHour
       }
+
+      // 填充五行信息
+      const gzYear = thisDateJson.dateInfo['gzYear']
+      if (gzYear !== undefined && gzYear !== '') {
+        const gzWxInfo = this._getGzWxInfo(gzYear)
+        thisDateJson.dateInfo['gzWxYear'] = gzWxInfo.gzWx
+        thisDateJson.dateInfo['wxYear'] = gzWxInfo.wx
+      }
+
+      const gzMonth = thisDateJson.dateInfo['gzMonth']
+      if (gzMonth !== undefined && gzMonth !== '') {
+        const gzWxInfo = this._getGzWxInfo(gzMonth)
+        thisDateJson.dateInfo['gzWxMonth'] = gzWxInfo.gzWx
+        thisDateJson.dateInfo['wxMonth'] = gzWxInfo.wx
+      }
+
+      const gzDay = thisDateJson.dateInfo['gzDay']
+      if (gzDay !== undefined && gzDay !== '') {
+        const gzWxInfo = this._getGzWxInfo(gzDay)
+        thisDateJson.dateInfo['gzWxDay'] = gzWxInfo.gzWx
+        thisDateJson.dateInfo['wxDay'] = gzWxInfo.wx
+      }
+
+      const gzHour = thisDateJson.dateInfo['gzHour']
+      if (gzHour !== undefined && gzHour !== '') {
+        const gzWxInfo = this._getGzWxInfo(gzHour)
+        thisDateJson.dateInfo['gzWxHour'] = gzWxInfo.gzWx
+        thisDateJson.dateInfo['wxHour'] = gzWxInfo.wx
+      }
+
+      // 计算五行数量
+      thisDateJson.dateInfo['jinNum'] = 0
+      thisDateJson.dateInfo['muNum'] = 0
+      thisDateJson.dateInfo['shuiNum'] = 0
+      thisDateJson.dateInfo['huoNum'] = 0
+      thisDateJson.dateInfo['tuNum'] = 0
+      const wxList = thisDateJson.dateInfo.wxYear + thisDateJson.dateInfo.wxMonth + thisDateJson.dateInfo.wxDay + thisDateJson.dateInfo.wxHour
+      for (let index = 0; index < wxList.length; index++) {
+        const element = wxList[index];
+        switch (element) {
+          case '金':
+            thisDateJson.dateInfo['jinNum'] = thisDateJson.dateInfo.jinNum + 1
+            break
+          case '木':
+            thisDateJson.dateInfo['muNum'] = thisDateJson.dateInfo.muNum + 1
+            break
+          case '水':
+            thisDateJson.dateInfo['shuiNum'] = thisDateJson.dateInfo.shuiNum + 1
+            break
+          case '火':
+            thisDateJson.dateInfo['huoNum'] = thisDateJson.dateInfo.huoNum + 1
+            break
+          case '土':
+            thisDateJson.dateInfo['tuNum'] = thisDateJson.dateInfo.tuNum + 1
+            break
+          default:
+            break
+        }
+      }
+
       //判断当前模式返回thisStr
       if (this.data.lunarTab === true) {
         thisDateJson.thisStr = thisDateJson.lunarStr;
@@ -391,9 +483,9 @@ Component({
       const index4TianGanOfZiShi = TIAN_GAN_LIST.indexOf(tianGanOfZiShi)
       // 找到对应时辰在地支中的 index，用于最终确定这个时辰的天干
       const index4DiZhiOfHour = DI_ZHI_LIST.indexOf(diZhiOfHour)
-      console.log(index4TianGanOfZiShi, index4DiZhiOfHour)
       return TIAN_GAN_LIST[(index4TianGanOfZiShi + index4DiZhiOfHour) % 10]
     },
+
     /**
      * 根据当日天干，获取该日子时对应的天干
      * 
@@ -416,6 +508,24 @@ Component({
 
       return undefined
     },
+
+    _getGzWxInfo(gz) {
+      const tgWx = this._getTgWx(gz[0])
+      const dzWx = this._getDzWx(gz[1])
+      return {
+        gzWx: gz[0] + '（' + tgWx + '）' + gz[1] + '（' + dzWx + '）',
+        wx: tgWx + dzWx,
+      }
+    },
+
+    _getTgWx(tg) {
+      return TIAN_GAN_WU_XING_MAP[tg]
+    },
+
+    _getDzWx(dz) {
+      return DI_ZHI_WU_XING_MAP[dz]
+    },
+
     // 填充农历数据
     _initlunar(date, hour) {
       const dateArr = date.split("-");

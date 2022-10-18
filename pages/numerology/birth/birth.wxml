@@ -13,27 +13,35 @@
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell__default" aria-role="option">
           <view class="weui-cell__bd">公历</view>
-          <view class="weui-cell__ft">{{result.cYear + '-' + result.cMonth + '-' + result.cDay}}</view>
+          <view class="weui-cell__ft">{{result.cYear + '年' + result.cMonth + '月' + result.cDay + '日' + result.cHour + '时'}}</view>
         </view>
         <view class="weui-cell weui-cell__default" aria-role="option">
           <view class="weui-cell__bd">农历</view>
-          <view class="weui-cell__ft">{{result.yearCn + result.monthCn + result.dayCn}}</view>
+          <view class="weui-cell__ft">{{result.yearCn + result.monthCn + result.dayCn + result.hourCn}}</view>
+        </view>
+        <view class="weui-cell weui-cell__highlight" aria-role="option">
+          <view class="weui-cell__bd">八字</view>
+          <view class="weui-cell__ft">{{result.gzYear + '年 ' + result.gzMonth + '月 ' + result.gzDay + '日 ' + result.gzHour + '时'}}</view>
         </view>
         <view class="weui-cell weui-cell__highlight" aria-role="option">
           <view class="weui-cell__bd">年柱</view>
-          <view class="weui-cell__ft">{{result.gzYear}}</view>
+          <view class="weui-cell__ft">{{result.gzWxYear}}</view>
         </view>
         <view class="weui-cell weui-cell__highlight" aria-role="option">
           <view class="weui-cell__bd">月柱</view>
-          <view class="weui-cell__ft">{{result.gzMonth}}</view>
+          <view class="weui-cell__ft">{{result.gzWxMonth}}</view>
         </view>
         <view class="weui-cell weui-cell__highlight" aria-role="option">
           <view class="weui-cell__bd">日柱</view>
-          <view class="weui-cell__ft">{{result.gzDay}}</view>
+          <view class="weui-cell__ft">{{result.gzWxDay}}</view>
         </view>
         <view class="weui-cell weui-cell__highlight" aria-role="option">
           <view class="weui-cell__bd">时柱</view>
-          <view class="weui-cell__ft">{{result.gzHour}}</view>
+          <view class="weui-cell__ft">{{result.gzWxHour}}</view>
+        </view>
+        <view class="weui-cell weui-cell__highlight" aria-role="option">
+          <view class="weui-cell__bd">五行</view>
+          <view class="weui-cell__ft">{{result.jinNum + '金 ' + result.muNum + '木 ' + result.shuiNum + '水 ' + result.huoNum + '火 ' + result.tuNum + '土'}}</view>
         </view>
         <view class="weui-cell weui-cell__default" aria-role="option">
           <view class="weui-cell__bd">生肖</view>
@@ -64,6 +72,18 @@
       <view class="weui-article__p">
         十二地支：子、丑、寅、卯、辰、巳、午、未、申、酉、戌、亥
       </view>
+
+      <view class="weui-article__h2">五行</view>
+      <view class="weui-article__p">
+        金木水火土，五行相生相克
+      </view>
+      <view class="weui-article__p">
+        天干五行：甲木、乙木、丙火、丁火、戊土、己土、庚金、辛金、壬水、癸水
+      </view>
+      <view class="weui-article__p">
+        十二地支五行：寅卯木、巳午火、申酉金、亥子水、丑未辰戌土
+      </view>
+
       <view class="weui-article__h2">四柱 & 八字</view>
       <view class="weui-article__p">
         人的生辰四柱：年、月、日、时
@@ -110,14 +130,14 @@
       <view class="weui-article__section">
         <view class="weui-article__h3">月上起日柱</view>
         <view class="weui-article__p">
-          按流行赶月推算，查万年历
+          按流星赶月推算，比较复杂，查万年历
         </view>
       </view>
       <view class="weui-article__h2">时柱</view>
       <view class="weui-article__section">
         <view class="weui-article__h3">日上起时干</view>
         <view class="weui-article__p">
-          必须从子位上顺排到亥的位置
+          根据以下口诀，通过当日的天干，便可以确定当日<text style="font-weight: bold; color: goldenrod;">子时</text>对应的天干是什么。
         </view>
         <view class="weui-article__p">
           甲己还生甲，乙庚丙做初

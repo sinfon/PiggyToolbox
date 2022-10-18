@@ -45,4 +45,5 @@
 - [生辰八字是什么？科普扫盲向](https://zhuanlan.zhihu.com/p/471294437)
 - [易学方法｜日上起时法](https://zhuanlan.zhihu.com/p/26102368)
 - [八字算命](https://www.buyiju.com/bazi/#csshow)
+  - 这个网站是按照 23 点是当天计算的，没有算到第二天，哈哈哈哈！！！
 - [picker不能阻止冒泡，求解答](https://developers.weixin.qq.com/community/develop/doc/000a429d7243d84c1057ab81350800)
